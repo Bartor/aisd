@@ -161,9 +161,8 @@ int findTRANS(LList* list, void* data, size_t datasize) {
 }
 
 int main(void) {
-	LList list;
-	list.first = NULL;
-	
+	LList list = {NULL};
+
 	Lprint(&list);
 	
 	int a[5] = {476, 2137, 621, 1337, 0};
