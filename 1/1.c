@@ -1,12 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 //globals to count comparisons to compare the methods
 int MTFCOMP = 0;
 int TRANSCOMP = 0;
 
-typedef struct {
+typedef struct LNode {
 	void* data;
 	struct LNode* next;
 } LNode;
@@ -221,14 +222,14 @@ int main(void) {
   	insert(&list, &num[i], sizeof(int));
   }
   
-  for (int i = 1; i <= 100; i++) num[i-1] = i;
-
   for (int i = 100; i > 0; i--) {
-  	for (int j = 0; j < 100; j++) {
-  		findTRANS(&list, &num[j], sizeof(int));
+  	for (int j = 1; j <= 100; j++) {
+  		int temp = j;
+  		findMTF(&list, &temp, sizeof(int));
   	}
   	Lprint(&list);
-  	del(&list, &i, sizeof(int));
+  	int temp = i;
+  	del(&list, &temp, sizeof(int));
   }
 
 	printf("COMPARISONS USING MTF: %d\nCOMPARISONS USING TRANS: %d\n", MTFCOMP, TRANSCOMP);
