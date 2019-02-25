@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
+//globals to count comparisons to compare the methods
+int MTFCOMP = 0;
+int TRANSCOMP = 0;
+
 typedef struct {
 	void* data;
 	struct LNode* next;
@@ -14,8 +18,8 @@ typedef struct {
 
 //prints the list as integers (for debug)
 void Lprint(LList* list) {
-	LNode* node = list-> first;
-	printf("printinf the list:\n");
+	LNode* node = list->first;
+	printf("printing the list:\n");
 	
 	while(node != NULL) {
 		int d = *(int*) node->data;
@@ -81,6 +85,10 @@ int del(LList* list, void* data, size_t datasize) {
 	LNode* prev;
 	
 	while(node != NULL) {
+		
+		//both methods compare every element while deleting
+		MTFCOMP++;
+		TRANSCOMP++;
 		if (memcmp(data, node->data, datasize) == 0) {
 			
 			if (prev != NULL) {
@@ -107,9 +115,10 @@ int del(LList* list, void* data, size_t datasize) {
 //returns 1 if did so
 int findMTF(LList* list, void* data, size_t datasize) {
 	LNode* node = list->first;
-	LNode* prev;
+	LNode* prev = NULL;
 	
 	while(node != NULL) {
+		MTFCOMP++;
 		if (memcmp(data, node->data, datasize) == 0) {
 			if (prev != NULL) {
 				prev->next = node->next;
@@ -132,10 +141,11 @@ int findMTF(LList* list, void* data, size_t datasize) {
 //returns 1 if did so
 int findTRANS(LList* list, void* data, size_t datasize) {
 	LNode* node = list->first;
-	LNode* prev;
-	LNode* pprev;
+	LNode* prev = NULL;
+	LNode* pprev = NULL;
 	
 	while(node != NULL) {
+		TRANSCOMP++;
 		if (memcmp(data, node->data, datasize) == 0) {
 			if (prev != NULL) {
 				if (pprev != NULL) {
@@ -160,32 +170,68 @@ int findTRANS(LList* list, void* data, size_t datasize) {
 	return 0;
 }
 
+//debug main
+// int main(void) {
+// 	LList list = {NULL};
+
+// 	Lprint(&list);
+	
+// 	int a[5] = {476, 2137, 621, 1337, 0};
+	
+// 	insert(&list, &a[0], sizeof(int));
+// 	insert(&list, &a[1], sizeof(int));
+// 	insert(&list, &a[2], sizeof(int));
+// 	insert(&list, &a[3], sizeof(int));
+// 	insert(&list, &a[4], sizeof(int));
+	
+// 	Lprint(&list);
+	
+// 	del(&list, &a[1], sizeof(int));
+	
+// 	Lprint(&list);
+
+// 	findMTF(&list, &a[2], sizeof(int));
+
+// 	Lprint(&list);
+	
+// 	findTRANS(&list, &a[3], sizeof(int));
+	
+// 	Lprint(&list);
+
+// 	return 0;
+// }
+
+//main as requested by the specs
 int main(void) {
-	LList list = {NULL};
+	int num[100];
+	for (int i = 1; i <= 100; i++) num[i-1] = i;
+	
+	//shuffle the array
+	srand(time(NULL));
+	for (int i = 0; i < 99; i++) {
+  	size_t j = i + rand()/(RAND_MAX/(100 - i)+1);
+    int t = num[j];
+    num[j] = num[i];
+    num[i] = t;
+  }
+  
+  LList list = {NULL};
+  
+  for (int i = 0; i < 100; i++) {
+  	insert(&list, &num[i], sizeof(int));
+  }
+  
+  for (int i = 1; i <= 100; i++) num[i-1] = i;
 
-	Lprint(&list);
-	
-	int a[5] = {476, 2137, 621, 1337, 0};
-	
-	insert(&list, &a[0], sizeof(int));
-	insert(&list, &a[1], sizeof(int));
-	insert(&list, &a[2], sizeof(int));
-	insert(&list, &a[3], sizeof(int));
-	insert(&list, &a[4], sizeof(int));
-	
-	Lprint(&list);
-	
-	del(&list, &a[1], sizeof(int));
-	
-	Lprint(&list);
+  for (int i = 100; i > 0; i--) {
+  	for (int j = 0; j < 100; j++) {
+  		findTRANS(&list, &num[j], sizeof(int));
+  	}
+  	Lprint(&list);
+  	del(&list, &i, sizeof(int));
+  }
 
-	findMTF(&list, &a[2], sizeof(int));
+	printf("COMPARISONS USING MTF: %d\nCOMPARISONS USING TRANS: %d\n", MTFCOMP, TRANSCOMP);
 
-	Lprint(&list);
-	
-	findTRANS(&list, &a[3], sizeof(int));
-	
-	Lprint(&list);
-
-	return 0;
+  return 0;
 }
