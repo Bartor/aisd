@@ -192,7 +192,7 @@ int main(void) {
 		insert(&t, &tab[i], sizeof(int));
 	}
 	
-	for (int j = 1; j <= SIZE; j++) {
+	for (int j = SIZE; j > 0; j--) {
 		for (int i = 1; i <= SIZE; i++) {
 			findTRANS(&t, &i, sizeof(int));
 			findMTF(&m, &i, sizeof(int));
