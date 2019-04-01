@@ -17,5 +17,7 @@ int main(void) {
 	for (int i = 0; i < 5; i++) printf("%d ", arr[i]);
 	printf("comparisons: %d swaps: %d\n", res[0], res[1]);
 	
+	free(res);
+	
 	return 0;
 }
