@@ -3,30 +3,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static inline int parent(int i) {
-	return i/2;
-}
-
-static inline int left(int i) {
-	return i*2;
-}
-
-static inline int right(int i) {
-	return i*2 + 1;
-}
-
 int* heapify(void* data, int index, int e_size, int size, int (*comparator)(void*, void*), int* results) {
-	int l = left(index);
-	int r = right(index);
-	int largest;
+	int l = 2*index;
+	int r = 2*index + 1;
+	int largest = index;
 	
-	if (l <= size) {
+	if (l < size) {
 		results[0]++;
-		if ((*comparator)(data + l*e_size, data + r*e_size) > 0) largest = l;
-		else largest = index;
-	} else largest = index;
+		if ((*comparator)(data + l*e_size, data + index*e_size) > 0) largest = l;
+	}
 	
-	if (r <= size) {
+	if (r < size) {
 		results[0]++;
 		if ((*comparator)(data + r*e_size, data + largest*e_size) > 0) largest = r;
 	}
@@ -49,8 +36,9 @@ int* heap_sort(void* data, int e_size, int size, int (*comparator)(void*, void*)
 	results[1] = 0;
 
 	for (int i = size/2; i >= 0; i--) heapify(data, i, e_size, size, comparator, results);
-	
-	for (int i = size; i >= 1; i--) {
+
+	for (int i = size - 1; i >= 0; i--) {
+		
 		results[1]++;
 		void* temp = malloc(e_size);
 		memcpy(temp, data, e_size);
@@ -58,7 +46,8 @@ int* heap_sort(void* data, int e_size, int size, int (*comparator)(void*, void*)
 		memcpy(data + i*e_size, temp, e_size);
 		free(temp);
 		
-		heapify(data, 0, e_size, --size, comparator, results);
+		size--;
+		heapify(data, 0, e_size, size, comparator, results);
 	}
 
 	return results;
