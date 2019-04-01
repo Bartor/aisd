@@ -2,9 +2,13 @@
 #include "sort/quick.h"
 #include "sort/heap.h"
 #include "sort/insertion.h"
+
+#include "pcg_basic.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 static inline int compare_int_desc(void* a, void* b) {
 	return *(int*)b - *(int*)a;
@@ -12,6 +16,18 @@ static inline int compare_int_desc(void* a, void* b) {
 
 static inline int compare_int_asc(void* a, void* b) {
 	return *(int*)a - *(int*)b;
+}
+
+int* random_arr(int size) {
+	pcg32_random_t rng;
+	pcg32_srandom_r(&rng, time(NULL), 42u);
+	
+	int* arr = malloc(size*sizeof(int));
+	for (int i = 0; i < size; i++) {
+		arr[i] = (int) pcg32_random_r(&rng);
+	}
+	
+	return arr;
 }
 
 int main(int argc, char* argv[]) {
@@ -60,6 +76,51 @@ int main(int argc, char* argv[]) {
 			printf("specify number of reps via -n [number]\n");
 			return 1;
 		}
+		
+		FILE* fd = fopen(file, "w");
+		
+		for (int i = 100; i <= 10000; i += 100) {
+			
+			fprintf(fd, "%d\n", i);
+			int* arr;
+			int* stat;
+			clock_t t;
+			
+			for (int j = 0; j < times; j++) {
+				arr = random_arr(i);
+				t = clock();
+				stat = heap_sort(arr, sizeof(int), i, &compare_int_asc);
+				t = clock() - t;
+				fprintf(fd, "hea,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);
+				free(stat);
+				free(arr);
+				
+				arr = random_arr(i);
+				t = clock();
+				stat = insertion_sort(arr, sizeof(int), i, &compare_int_asc);
+				t = clock() - t;
+				fprintf(fd, "ins,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);
+				free(stat);
+				free(arr);
+				
+				arr = random_arr(i);
+				t = clock();
+				stat = quick_sort(arr, sizeof(int), i, &compare_int_asc);
+				t = clock() - t;
+				fprintf(fd, "qui,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);
+				free(stat);
+				free(arr);
+				
+				arr = random_arr(i);
+				t = clock();
+				stat = selection_sort(arr, sizeof(int), i, &compare_int_asc);
+				t = clock() - t;
+				fprintf(fd, "sel,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);	
+				free(stat);
+				free(arr);
+			}
+		}
+		
 	} else {
 		int size;
 		scanf("%d", &size);
