@@ -80,47 +80,58 @@ int main(int argc, char* argv[]) {
 		FILE* fd = fopen(file, "w");
 		
 		for (int i = 100; i <= 10000; i += 100) {
-			
+			printf("=====ROUND %d STARTING=====\n", i);
 			fprintf(fd, "%d\n", i);
 			int* arr;
 			int* stat;
 			clock_t t;
 			
 			for (int j = 0; j < times; j++) {
+				printf("=RUN %d OF %d=\n", j+1, times);
+				
 				arr = random_arr(i);
+				printf("Heap... ");
 				t = clock();
 				stat = heap_sort(arr, sizeof(int), i, &compare_int_asc);
 				t = clock() - t;
+				printf("done, %lf s\n", ((double)t)/CLOCKS_PER_SEC);
 				fprintf(fd, "hea,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);
 				free(stat);
 				free(arr);
 				
 				arr = random_arr(i);
+				printf("Insertion... ");
 				t = clock();
 				stat = insertion_sort(arr, sizeof(int), i, &compare_int_asc);
 				t = clock() - t;
+				printf("done, %lf s\n", ((double)t)/CLOCKS_PER_SEC);
 				fprintf(fd, "ins,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);
 				free(stat);
 				free(arr);
 				
 				arr = random_arr(i);
+				printf("Quick... ");
 				t = clock();
 				stat = quick_sort(arr, sizeof(int), i, &compare_int_asc);
 				t = clock() - t;
+				printf("done, %lf s\n", ((double)t)/CLOCKS_PER_SEC);
 				fprintf(fd, "qui,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);
 				free(stat);
 				free(arr);
 				
 				arr = random_arr(i);
+				printf("Selection... ");
 				t = clock();
 				stat = selection_sort(arr, sizeof(int), i, &compare_int_asc);
 				t = clock() - t;
+				printf("done, %lf s\n", ((double)t)/CLOCKS_PER_SEC);
 				fprintf(fd, "sel,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);	
 				free(stat);
 				free(arr);
 			}
 		}
 		
+		fclose(fd);
 	} else {
 		int size;
 		scanf("%d", &size);
