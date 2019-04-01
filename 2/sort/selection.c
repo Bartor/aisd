@@ -4,6 +4,9 @@
 
 int* selection_sort(void* data, int e_size, int size, int (*comparator)(void*, void*)) {
 	int* results = malloc(2*sizeof(int));
+	results[0] = 0;
+	results[1] = 0;
+	
 	for (int i = 0; i < size; i++) {
 		int min = i;
 		
