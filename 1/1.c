@@ -201,7 +201,7 @@ int main(void) {
 		del(&m, &j, sizeof(int));
 	}
 
-	printf("Total comparisons done\ntrans:%10d of which del did:%6d\nmtf:  %10d of which del did:%6d\n", m.mtf, m.trans, t.trans, t.mtf);
+	printf("Total comparisons done\nmtf:  %10d of which del did:%6d\ntrans:%10d of which del did:%6d\n", m.mtf, m.trans, t.trans, t.mtf);
 
 	return 0;
 }
