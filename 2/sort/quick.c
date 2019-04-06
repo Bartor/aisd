@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int partition(int* data, int lo, int hi, int e_size, int (*comparator)(void*, void*), int* results) {
+int partition(void* data, int lo, int hi, int e_size, int (*comparator)(void*, void*), int* results) {
 	int i = lo;
 	void* pivot = data + hi*e_size;
 	for (int j = lo; j < hi; j++) {
