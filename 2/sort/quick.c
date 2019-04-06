@@ -3,35 +3,39 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int partition(int* data, int p, int r, int e_size, int (*comparator)(void*, void*), int* results) {
-	int j, i;
-	i = p - 1;
-	void* x = data + r*e_size;
-	for (j = p; j < r; j++) {
+int partition(int* data, int lo, int hi, int e_size, int (*comparator)(void*, void*), int* results) {
+	int i = lo;
+	void* pivot = data + hi*e_size;
+	for (int j = lo; j < hi; j++) {
 		results[0]++;
-		if ((*comparator)(data + j*e_size, x) <= 0) {
-			i++;
+		if ((*comparator)(data + j*e_size, pivot) < 0) {
 			results[1]++;
 			void* temp = malloc(e_size);
 			memcpy(temp, data + i*e_size, e_size);
 			memcpy(data + i*e_size, data + j*e_size, e_size);
 			memcpy(data + j*e_size, temp, e_size);
 			free(temp);
+			
+			i++;
 		}
 	}
 	
-	memcpy(data + r*e_size, data + (i+1)*e_size, e_size);
-	memcpy(data + (i+1)*e_size, x, e_size);
+	results[1]++;
+	void* temp = malloc(e_size);
+	memcpy(temp, data + i*e_size, e_size);
+	memcpy(data + i*e_size, data + hi*e_size, e_size);
+	memcpy(data + hi*e_size, temp, e_size);
+	free(temp);
 	
-	return i+1;
+	return i;
 }
 
 
-void qs(void* data, int p, int r, int e_size, int (*comparator)(void*, void*), int* results) {
-	if (p < r) {
-		int q = partition(data, p, r, e_size, comparator, results);
-		qs(data, p, q - 1, e_size, comparator, results);
-		qs(data, q + 1, r, e_size, comparator, results);
+void qs(void* data, int lo, int hi, int e_size, int (*comparator)(void*, void*), int* results) {
+	if (lo < hi) {
+		int p = partition(data, lo, hi, e_size, comparator, results);
+		qs(data, lo, p - 1, e_size, comparator, results);
+		qs(data, p + 1, hi, e_size, comparator, results);
 	}
 }
 
