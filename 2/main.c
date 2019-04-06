@@ -10,21 +10,24 @@
 #include <string.h>
 #include <time.h>
 
-static inline int compare_int_desc(void* a, void* b) {
-	return *(int*)b - *(int*)a;
+extern inline int compare_int_desc(void* a, void* b) {
+	return *((int*) b) - *((int*) a);
 }
 
-static inline int compare_int_asc(void* a, void* b) {
-	return *(int*)a - *(int*)b;
+extern inline int compare_int_asc(void* a, void* b) {
+	return *((int*) a) - *((int*) b);
 }
 
 int* random_arr(int size) {
 	pcg32_random_t rng;
 	pcg32_srandom_r(&rng, time(NULL), 42u);
 	
+	srand(time(NULL));
+	
 	int* arr = malloc(size*sizeof(int));
+	
 	for (int i = 0; i < size; i++) {
-		arr[i] = (int) pcg32_random_r(&rng);
+		arr[i] = ((int) pcg32_random_r(&rng)) % size;
 	}
 	
 	return arr;
