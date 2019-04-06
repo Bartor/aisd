@@ -1,6 +1,7 @@
 #include "selection.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 int* selection_sort(void* data, int e_size, int size, int (*comparator)(void*, void*)) {
 	int* results = malloc(2*sizeof(int));
@@ -12,7 +13,7 @@ int* selection_sort(void* data, int e_size, int size, int (*comparator)(void*, v
 		
 		for (int j = i+1; j < size; j++) {
 			results[0]++;
-			if ((*comparator)(data+j*e_size, data + min*e_size) < 0) min = j;
+			if ((*comparator)(data + j*e_size, data + min*e_size) < 0) min = j;
 		}
 		
 		if (min != i) {
