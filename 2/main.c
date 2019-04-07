@@ -1,5 +1,6 @@
 #include "sort/selection.h"
 #include "sort/quick.h"
+#include "sort/mquick.h"
 #include "sort/heap.h"
 #include "sort/insertion.h"
 
@@ -85,53 +86,85 @@ int main(int argc, char* argv[]) {
 		for (int i = 100; i <= 10000; i += 100) {
 			printf("=====ROUND %d STARTING=====\n", i);
 			fprintf(fd, "%d\n", i);
-			int* arr;
-			int* stat;
+			int *master = random_arr(i);
+			int *stat, *arr = malloc(i*sizeof(int));
+			double master_stats[5][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}}; //hea, ins, qui, sel, mqu | comp, swap, time
 			clock_t t;
 			
 			for (int j = 0; j < times; j++) {
 				printf("=RUN %d OF %d=\n", j+1, times);
 				
-				arr = random_arr(i);
+				arr = malloc(i*sizeof(int));
+				memcpy(arr, master, i*sizeof(int));
 				printf("Heap... ");
 				t = clock();
 				stat = heap_sort(arr, sizeof(int), i, &compare_int_asc);
 				t = clock() - t;
 				printf("done, %lf s\n", ((double)t)/CLOCKS_PER_SEC);
-				fprintf(fd, "hea,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);
+				master_stats[0][0] += stat[0]/times;
+				master_stats[0][1] += stat[1]/times;
+				master_stats[0][2] += ((double)t)/(CLOCKS_PER_SEC*times);
 				free(stat);
 				free(arr);
 				
-				arr = random_arr(i);
+				arr = malloc(i*sizeof(int));
+				memcpy(arr, master, i*sizeof(int));
 				printf("Insertion... ");
 				t = clock();
 				stat = insertion_sort(arr, sizeof(int), i, &compare_int_asc);
 				t = clock() - t;
 				printf("done, %lf s\n", ((double)t)/CLOCKS_PER_SEC);
-				fprintf(fd, "ins,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);
+				master_stats[1][0] += stat[0]/times;
+				master_stats[1][1] += stat[1]/times;
+				master_stats[1][2] += ((double)t)/(CLOCKS_PER_SEC*times);
 				free(stat);
 				free(arr);
 				
-				arr = random_arr(i);
+				arr = malloc(i*sizeof(int));
+				memcpy(arr, master, i*sizeof(int));
 				printf("Quick... ");
 				t = clock();
 				stat = quick_sort(arr, sizeof(int), i, &compare_int_asc);
 				t = clock() - t;
 				printf("done, %lf s\n", ((double)t)/CLOCKS_PER_SEC);
-				fprintf(fd, "qui,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);
+				master_stats[2][0] += stat[0]/times;
+				master_stats[2][1] += stat[1]/times;
+				master_stats[2][2] += ((double)t)/(CLOCKS_PER_SEC*times);			
 				free(stat);
 				free(arr);
 				
-				arr = random_arr(i);
+				arr = malloc(i*sizeof(int));
+				memcpy(arr, master, i*sizeof(int));
 				printf("Selection... ");
 				t = clock();
 				stat = selection_sort(arr, sizeof(int), i, &compare_int_asc);
 				t = clock() - t;
 				printf("done, %lf s\n", ((double)t)/CLOCKS_PER_SEC);
-				fprintf(fd, "sel,%d,%d,%lf\n", stat[0], stat[1], ((double)t)/CLOCKS_PER_SEC);	
+				master_stats[3][0] += stat[0]/times;
+				master_stats[3][1] += stat[1]/times;
+				master_stats[3][2] += ((double)t)/(CLOCKS_PER_SEC*times);			
+				free(stat);
+				free(arr);
+				
+				arr = malloc(i*sizeof(int));
+				memcpy(arr, master, i*sizeof(int));
+				printf("mQuick... ");
+				t = clock();
+				stat = mquick_sort(arr, sizeof(int), i, &compare_int_asc);
+				t = clock() - t;
+				printf("done, %lf s\n", ((double)t)/CLOCKS_PER_SEC);
+				master_stats[4][0] += stat[0]/times;
+				master_stats[4][1] += stat[1]/times;
+				master_stats[4][2] += ((double)t)/(CLOCKS_PER_SEC*times);		
 				free(stat);
 				free(arr);
 			}
+			fprintf(fd, "%lf,%lf,%lf\n", master_stats[0][0], master_stats[0][1], master_stats[0][2]);
+			fprintf(fd, "%lf,%lf,%lf\n", master_stats[1][0], master_stats[1][1], master_stats[1][2]);
+			fprintf(fd, "%lf,%lf,%lf\n", master_stats[2][0], master_stats[2][1], master_stats[2][2]);
+			fprintf(fd, "%lf,%lf,%lf\n", master_stats[3][0], master_stats[3][1], master_stats[3][2]);
+			fprintf(fd, "%lf,%lf,%lf\n", master_stats[4][0], master_stats[4][1], master_stats[4][2]);
+			free(master);
 		}
 		
 		fclose(fd);
@@ -162,6 +195,10 @@ int main(int argc, char* argv[]) {
 			case 'q':
 				if (asc == 1) res = quick_sort(arr, sizeof(int), size, &compare_int_asc);
 				else res = quick_sort(arr, sizeof(int), size, &compare_int_desc);
+				break;
+			case 'm':
+				if (asc == 1) res = mquick_sort(arr, sizeof(int), size, &compare_int_asc);
+				else res = mquick_sort(arr, sizeof(int), size, &compare_int_desc);
 				break;
 			default:
 				printf("wrong sorting algorithm\n");
