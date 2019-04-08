@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int* heapify(void* data, int index, int e_size, int size, int (*comparator)(void*, void*), int* results) {
+static inline void heapify(void* data, int index, int e_size, int size, int (*comparator)(void*, void*), int* results) {
 	int l = 2*index;
 	int r = 2*index + 1;
 	int largest = index;
