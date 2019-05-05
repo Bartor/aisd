@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface GraphInterface {
     public void addEdge(GraphEdge edge);
-    public List<GraphEdge> shortestPath(int from, int to);
+    public List<GraphEdge> shortestPath(int from);
 }

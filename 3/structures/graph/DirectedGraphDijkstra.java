@@ -21,7 +21,7 @@ public class DirectedGraphDijkstra implements GraphInterface {
     }
 
     @Override
-    public List<GraphEdge> shortestPath(int from, int to) {
+    public List<GraphEdge> shortestPath(int from) {
         int[] d = new int[edges.length];
         int[] prev = new int[edges.length];
         for (int i = 0; i < edges.length; i++) {
@@ -51,9 +51,5 @@ public class DirectedGraphDijkstra implements GraphInterface {
 
         //todo return shortest and list
         return null;
-    }
-
-    public int[][] getEdges() {
-        return edges;
     }
 }
