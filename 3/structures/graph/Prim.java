@@ -15,7 +15,9 @@ public class Prim {
         keys = new int[graph.getEdges().length];
     }
 
-    public void mst(int root) {
+    public UndirectedGraph mst(int root) {
+        UndirectedGraph g = new UndirectedGraph(graph.getEdges().length);
+
         PriorityQueueInterface q = new HeapPriorityQueue();
         for (int i = 0; i < graph.getEdges().length; i++) {
             keys[i] = Integer.MAX_VALUE;
@@ -25,7 +27,6 @@ public class Prim {
             q.insert(new BasicQueueElement<Integer>(i, keys[i]));
         }
         parent[root] = null;
-        int s = 0;
 
         while (!q.empty()) {
             int u = (Integer) q.top().getValue();
@@ -34,12 +35,11 @@ public class Prim {
                     parent[e.from] = e.to;
                     keys[e.from] = e.weight;
                     q.priority(new BasicQueueElement<Integer>(e.from, keys[e.from]));
-                    s += e.weight;
+                    g.addEdge(e);
                 }
             }
             q.pop();
         }
-
-        System.out.println(s);
+        return g;
     }
 }

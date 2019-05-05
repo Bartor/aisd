@@ -14,4 +14,9 @@ public class GraphEdge {
     public int getWeight() {
         return weight;
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%d->%d : %d)", from, to, weight);
+    }
 }
