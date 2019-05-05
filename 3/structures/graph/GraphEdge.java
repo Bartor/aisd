@@ -1,6 +1,6 @@
 package structures.graph;
 
-public class GraphEdge {
+public class GraphEdge implements Comparable<GraphEdge> {
     public int from;
     public int to;
     public int weight;
@@ -18,5 +18,10 @@ public class GraphEdge {
     @Override
     public String toString() {
         return String.format("(%d->%d : %d)", from, to, weight);
+    }
+
+    @Override
+    public int compareTo(GraphEdge o) {
+        return weight - o.weight;
     }
 }

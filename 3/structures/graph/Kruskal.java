@@ -1,60 +1,74 @@
 package structures.graph;
 
-import java.util.Comparator;
+import structures.queue.BasicQueueElement;
+import structures.queue.HeapPriorityQueue;
+import structures.queue.PriorityQueueInterface;
+import structures.queue.QueueElementInterface;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Kruskal {
-    private int[] rank;
-    private Integer[] parent;
-    private UndirectedGraph graph;
+    private int v;
+    private List<GraphEdge> edges = new ArrayList<>();
 
     public Kruskal(UndirectedGraph graph) {
-        this.graph = graph;
-        rank = new int[graph.getEdges().length];
-        parent = new Integer[graph.getEdges().length];
+        this.v = graph.getEdges().length;
+        //creating a simpler graph representation
+        for (List<GraphEdge> l : graph.getEdges()) {
+            for (GraphEdge e : l) {
+                this.edges.add(new GraphEdge(e.from, e.to, e.weight));
+                for (GraphEdge ee : graph.getEdges()[e.to]) {
+                    if (ee.to == e.from) {
+                        graph.getEdges()[e.to].remove(ee);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public UndirectedGraph mst() {
-        UndirectedGraph g = new UndirectedGraph(graph.getEdges().length);
-        for (int i = 0; i < graph.getEdges().length; i++) makeSet(i);
-
-        for (int i = 0; i < graph.getEdges().length; i++) {
-            graph.getEdges()[i].sort(Comparator.comparingInt(GraphEdge::getWeight));
+        PriorityQueueInterface q = new HeapPriorityQueue();
+        for (int i = 0; i < edges.size(); i++) {
+            q.insert(new BasicQueueElement<GraphEdge>(edges.get(i), edges.get(i).weight));
         }
 
-        for (int i = 0; i < graph.getEdges().length; i++) {
-            for (GraphEdge e : graph.getEdges()[i]) {
-                if (findSet(e.to) != findSet(e.from)) {
-                    g.addEdge(new GraphEdge(e.from, e.to, e.weight));
-                    union(e.to, e.from);
-                }
+        int[] parent = new int[v];
+        makeSet(parent);
+
+        UndirectedGraph g = new UndirectedGraph(v);
+        int index = 0;
+        while (index < v - 1) {
+            GraphEdge edge = (GraphEdge) q.pop().getValue();
+            int x = find(parent, edge.from);
+            int y = find(parent, edge.to);
+
+            if (x != y) {
+                g.addEdge(new GraphEdge(edge.from, edge.to, edge.weight));
+                index++;
+                union(parent, x, y);
             }
         }
 
         return g;
     }
 
-    private void link(int x, int y) {
-        if (rank[x] > rank[y]) {
-            parent[y] = x;
-        } else {
-            parent[x] = y;
-            if (rank[x] == rank[y]) rank[y]++;
+    private void makeSet(int[] parent) {
+        for (int i = 0; i < v; i++) {
+            parent[i] = i;
         }
     }
 
-    private void makeSet(int x) {
-        parent[x] = x;
-        rank[x] = 0;
+    private int find(int[] parent, int vertex) {
+        if (parent[vertex] != vertex) return find(parent, parent[vertex]);
+        return vertex;
     }
 
-    private int findSet(int x) {
-        if (x != parent[x]) {
-            parent[x] = findSet(parent[x]);
-        }
-        return parent[x];
-    }
+    private void union(int[] parent, int x, int y) {
+        int xx = find(parent, x);
+        int yy = find(parent, y);
 
-    private void union(int x, int y) {
-        link(findSet(x), findSet(y));
+        parent[yy] = xx;
     }
 }
