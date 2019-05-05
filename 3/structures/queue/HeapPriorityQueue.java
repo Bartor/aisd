@@ -13,7 +13,14 @@ public class HeapPriorityQueue implements PriorityQueueInterface {
 
     @Override
     public void priority(QueueElementInterface element) {
-
+        //todo implement this in O(logn) somehow
+        for (int i = 0; i < elements.size(); i++) {
+            QueueElementInterface e = elements.get(i);
+            if (e.getValue().equals(element.getValue()) && element.getPriority() > e.getPriority()) {
+                e.setPriority(e.getPriority());
+                siftUp(i);
+            }
+        }
     }
 
     @Override
