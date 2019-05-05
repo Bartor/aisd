@@ -46,6 +46,14 @@ public class HeapPriorityQueue implements PriorityQueueInterface {
         }
     }
 
+    @Override
+    public boolean contains(QueueElementInterface element) {
+        for (QueueElementInterface e : elements) {
+            if (e.getValue().equals(element.getValue())) return true;
+        }
+        return false;
+    }
+
     public String print() {
         StringBuilder b = new StringBuilder();
         for (QueueElementInterface e : elements) {
