@@ -10,4 +10,8 @@ public class GraphEdge {
         this.to = to;
         this.weight = weight;
     }
+
+    public int getWeight() {
+        return weight;
+    }
 }

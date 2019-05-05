@@ -20,4 +20,17 @@ public class UndirectedGraph implements GraphInterface {
     public List<GraphEdge>[] getEdges() {
         return edges;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        for (List<GraphEdge> l : edges) {
+            for (GraphEdge e : l) {
+                b.append(e.weight);
+                b.append(" ");
+            }
+            b.append("\n");
+        }
+        return b.toString();
+    }
 }
