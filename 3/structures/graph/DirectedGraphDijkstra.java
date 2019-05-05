@@ -10,8 +10,8 @@ import java.util.List;
 public class DirectedGraphDijkstra implements GraphInterface {
     private int[][] edges;
 
-    public DirectedGraphDijkstra(int edgeCount) {
-        edges = new int[edgeCount][edgeCount];
+    public DirectedGraphDijkstra(int verticesCount) {
+        edges = new int[verticesCount][verticesCount];
         for (int[] e : edges) for (int i = 0; i < e.length; i++) e[i] = -1;
     }
 
@@ -20,7 +20,6 @@ public class DirectedGraphDijkstra implements GraphInterface {
         edges[edge.from][edge.to] = edge.weight;
     }
 
-    @Override
     public List<GraphEdge> shortestPath(int from) {
         int[] d = new int[edges.length];
         int[] prev = new int[edges.length];
