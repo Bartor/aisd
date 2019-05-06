@@ -1,17 +1,17 @@
 package structures.queue;
 
-public class BasicQueueElement<T extends Comparable<T>> implements QueueElementInterface {
+public class BasicQueueElement<T extends Comparable<T>, K extends Comparable<K>> implements QueueElementInterface<T, K> {
     private T value;
-    private int priority;
+    private K priority;
 
-    public BasicQueueElement(T value, int priority) {
+    public BasicQueueElement(T value, K priority) {
         this.value = value;
         this.priority = priority;
     }
 
     @Override
-    public int getPriority() {
-        return this.priority;
+    public K getPriority() {
+        return priority;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class BasicQueueElement<T extends Comparable<T>> implements QueueElementI
     }
 
     @Override
-    public void setPriority(int priority) {
+    public void setPriority(K priority) {
         this.priority = priority;
     }
 }

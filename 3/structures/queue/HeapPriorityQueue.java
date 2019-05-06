@@ -16,7 +16,7 @@ public class HeapPriorityQueue implements PriorityQueueInterface {
         //todo implement this in O(logn) somehow
         for (int i = 0; i < elements.size(); i++) {
             QueueElementInterface e = elements.get(i);
-            if (e.getValue().equals(element.getValue()) && element.getPriority() < e.getPriority()) {
+            if (e.getValue().equals(element.getValue()) && element.getPriority().compareTo(e.getPriority()) < 0) {
                 e.setPriority(element.getPriority());
                 siftUp(i);
             }
@@ -75,10 +75,10 @@ public class HeapPriorityQueue implements PriorityQueueInterface {
             left = 2 * current + 1;
             right = left + 1;
 
-            if (left < size && elements.get(left).getPriority() < elements.get(current).getPriority()) {
+            if (left < size && elements.get(left).getPriority().compareTo(elements.get(current).getPriority()) < 0) {
                 current = left;
             }
-            if (right < size && elements.get(right).getPriority() < elements.get(current).getPriority()) {
+            if (right < size && elements.get(right).getPriority().compareTo(elements.get(current).getPriority()) <0) {
                 current = right;
             }
 
@@ -97,7 +97,7 @@ public class HeapPriorityQueue implements PriorityQueueInterface {
 
             parent = (current - 1)/2;
 
-            if (parent >= 0 && elements.get(parent).getPriority() > elements.get(current).getPriority()) {
+            if (parent >= 0 && elements.get(parent).getPriority().compareTo( elements.get(current).getPriority()) >0) {
                 current = parent;
             }
 

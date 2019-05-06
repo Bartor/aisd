@@ -17,7 +17,7 @@ public class MSTLauncher {
             String input = in.nextLine();
             String[] line = input.split(" ");
             try {
-                d.addEdge(new GraphEdge(Integer.parseInt(line[0]), Integer.parseInt(line[1]), Integer.parseInt(line[2])));
+                d.addEdge(new GraphEdge(Integer.parseInt(line[0]), Integer.parseInt(line[1]), Float.parseFloat(line[2])));
             } catch (NumberFormatException e) {
                 System.out.println(e);
                 return;
@@ -30,11 +30,11 @@ public class MSTLauncher {
             switch (args[0]) {
                 case "-k":
                     Kruskal k = new Kruskal(d);
-                    System.out.println(k.mst());
+                    k.mst();
                     break;
                 case "-p":
                     Prim p = new Prim(d);
-                    System.out.println(p.mst());
+                    p.mst();
                     break;
                 default:
                     System.out.println("wrong parameters");

@@ -17,7 +17,7 @@ public class Dijkstra {
     }
 
     public List<Integer>[] shortestPath(int from) {
-        int[] d = new int[graph.getVerticesCount()];
+        float[] d = new float[graph.getVerticesCount()];
         int[] prev = new int[graph.getVerticesCount()];
         for (int i = 0; i < graph.getVerticesCount(); i++) {
             d[i] = Integer.MAX_VALUE;
@@ -27,7 +27,7 @@ public class Dijkstra {
 
         PriorityQueueInterface q = new HeapPriorityQueue();
         for (int i = 0; i < graph.getVerticesCount(); i++) {
-            q.insert(new BasicQueueElement<Integer>(i, d[i]));
+            q.insert(new BasicQueueElement<Integer, Float>(i, d[i]));
         }
 
         while (!q.empty()) {
@@ -38,7 +38,7 @@ public class Dijkstra {
                 if (d[edge.to] > d[u] + edge.weight) {
                     d[edge.to] = d[u] = edge.weight;
                     prev[edge.to] = u;
-                    q.priority(new BasicQueueElement<Integer>(edge.to, d[edge.to]));
+                    q.priority(new BasicQueueElement<Integer, Float>(edge.to, d[edge.to]));
                 }
             }
         }

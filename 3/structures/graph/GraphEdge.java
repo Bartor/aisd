@@ -3,15 +3,15 @@ package structures.graph;
 public class GraphEdge implements Comparable<GraphEdge> {
     public int from;
     public int to;
-    public int weight;
+    public float weight;
 
-    public GraphEdge(int from, int to, int weight) {
+    public GraphEdge(int from, int to, float weight) {
         this.from = from;
         this.to = to;
         this.weight = weight;
     }
 
-    public int getWeight() {
+    public float getWeight() {
         return weight;
     }
 
@@ -22,6 +22,8 @@ public class GraphEdge implements Comparable<GraphEdge> {
 
     @Override
     public int compareTo(GraphEdge o) {
-        return weight - o.weight;
+        if (weight - o.weight == 0) return 0;
+        else if (weight - o.weight < 0) return -1;
+        else return 1;
     }
 }

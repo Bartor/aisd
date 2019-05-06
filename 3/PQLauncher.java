@@ -19,15 +19,16 @@ public class PQLauncher {
             switch(words[0]) {
                 case "insert":
                     if (words.length >= 3) {
-                        int value, priority;
+                        int value;
+                        float priority;
                         try {
                             value = Integer.parseInt(words[1]);
-                            priority = Integer.parseInt(words[2]);
+                            priority = Float.parseFloat(words[2]);
                         } catch (NumberFormatException e) {
                             System.out.println("incorrect numbers");
                             break;
                         }
-                        q.insert(new BasicQueueElement<Integer>(value, priority));
+                        q.insert(new BasicQueueElement<Integer, Float>(value, priority));
                     }
                     break;
                 case "empty":
@@ -42,15 +43,16 @@ public class PQLauncher {
                     break;
                 case "priority":
                     if (words.length >= 3) {
-                        int value, priority;
+                        int value;
+                        float priority;
                         try {
                             value = Integer.parseInt(words[1]);
-                            priority = Integer.parseInt(words[2]);
+                            priority = Float.parseFloat(words[2]);
                         } catch (NumberFormatException ee) {
                             System.out.println("incorrect numbers");
                             break;
                         }
-                        q.priority(new BasicQueueElement<Integer>(value, priority));
+                        q.priority(new BasicQueueElement<Integer, Float>(value, priority));
                     }
                     break;
                 case "print":

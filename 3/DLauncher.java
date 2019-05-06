@@ -20,7 +20,7 @@ public class DLauncher {
             String input = in.nextLine();
             String[] line = input.split(" ");
             try {
-                d.addEdge(new GraphEdge(Integer.parseInt(line[0]), Integer.parseInt(line[1]), Integer.parseInt(line[2])));
+                d.addEdge(new GraphEdge(Integer.parseInt(line[0]), Integer.parseInt(line[1]), Float.parseFloat(line[2])));
             } catch (NumberFormatException e) {
                 System.out.println(e);
                 return;

@@ -57,9 +57,13 @@ public class Kruskal {
             }
         }
 
-        for (i = 0; i < e; ++i) {
+        float weight = 0;
+        for (i = 0; i < e; i++) {
+            weight+= res[i].weight;
+            System.out.println(res[i].from + " " + res[i].to + " : " + res[i].weight);
             g.addEdge(new GraphEdge(res[i].from, res[i].to, res[i].weight));
         }
+        System.out.println(weight);
 
         return g;
     }
