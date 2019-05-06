@@ -10,7 +10,12 @@ import java.util.List;
 
 public class Kruskal {
     private int v;
+    private int e;
     private List<GraphEdge> edges = new ArrayList<>();
+
+    private class subset {
+        int parent, rank;
+    }
 
     public Kruskal(UndirectedGraph graph) {
         this.v = graph.getEdges().length;
@@ -29,46 +34,56 @@ public class Kruskal {
     }
 
     public UndirectedGraph mst() {
-        PriorityQueueInterface q = new HeapPriorityQueue();
-        for (int i = 0; i < edges.size(); i++) {
-            q.insert(new BasicQueueElement<GraphEdge>(edges.get(i), edges.get(i).weight));
+        UndirectedGraph g = new UndirectedGraph(v);
+
+        GraphEdge[] res = new GraphEdge[v];
+        int e = 0, i = 0;
+        for (i = 0; i < v; i++) res[i] = new GraphEdge(-1, -1, -1);
+
+        edges.sort(GraphEdge::compareTo);
+        System.out.println(edges);
+
+        subset[] subsets = new subset[v];
+        for (i = 0; i < v; i++) {
+            subsets[i] = new subset();
+            subsets[i].parent = i;
+            subsets[i].rank = 0;
         }
 
-        int[] parent = new int[v];
-        makeSet(parent);
+        i = 0;
 
-        UndirectedGraph g = new UndirectedGraph(v);
-        int index = 0;
-        while (index < v - 1) {
-            GraphEdge edge = (GraphEdge) q.pop().getValue();
-            int x = find(parent, edge.from);
-            int y = find(parent, edge.to);
+        while (e < v-1) {
+            GraphEdge nextEdge = edges.get(i++);
+            int x = find(subsets, nextEdge.from);
+            int y = find(subsets, nextEdge.to);
 
-            if (x != y) {
-                g.addEdge(new GraphEdge(edge.from, edge.to, edge.weight));
-                index++;
-                union(parent, x, y);
+            if (x!=y) {
+                res[e++] = nextEdge;
+                union(subsets, x, y);
             }
+        }
+
+        for (i = 0; i < e; ++i) {
+            g.addEdge(new GraphEdge(res[i].from, res[i].to, res[i].weight));
         }
 
         return g;
     }
 
-    private void makeSet(int[] parent) {
-        for (int i = 0; i < v; i++) {
-            parent[i] = i;
+    private int find(subset[] subsets, int i) {
+        if (subsets[i].parent != i) subsets[i].parent = find(subsets, subsets[i].parent);
+        return subsets[i].parent;
+    }
+
+    private void union(subset[] subsets, int x, int y) {
+        int xroot = find(subsets, x);
+        int yroot = find(subsets, y);
+
+        if (subsets[xroot].rank < subsets[yroot].rank) subsets[xroot].parent = yroot;
+        else if (subsets[xroot].rank > subsets[yroot].rank) subsets[yroot].parent = xroot;
+        else {
+            subsets[yroot].parent = xroot;
+            subsets[xroot].rank++;
         }
-    }
-
-    private int find(int[] parent, int vertex) {
-        if (parent[vertex] != vertex) return find(parent, parent[vertex]);
-        return vertex;
-    }
-
-    private void union(int[] parent, int x, int y) {
-        int xx = find(parent, x);
-        int yy = find(parent, y);
-
-        parent[yy] = xx;
     }
 }
