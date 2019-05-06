@@ -20,3 +20,10 @@ na `void*`, uniwersalnie.
 oraz liczące czasy wykonań tych sortowań. Program działa w dwóch konfiguracjach, albo przyjmując parametry `-t i|s|h|q|m` - algorytm sortowania 
 `-a` - ascending, `-d` - desceding, albo `-stat nazwa_pliku -n ilość_powtórzeń` tworzącego dane statystyczne w csv o czasach i liczbach porównań.
 Lista wykonana na `void*`, uniwersalnie.
+
+### Lista 3
+
+1. Kolejka priorytetowa z poleceniami `insert`, `top`, `pop`, `empty`, `print` oraz `priority` (zmiana priorytetu) działająca w log(n).
+2. Algorytm Dijkstry korzystający z kolejki priorytetowej z poprzedniego zadania.
+3. Algorytmy Prima i Kruskala szukające minimalnego drzewa rozpinającego używając kolejki priorytetowej oraz union find w grafach nieskierowanych.
+4. Algorytm szukający silnie spójnych składowych grafu skierowanego.
