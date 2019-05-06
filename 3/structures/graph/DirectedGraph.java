@@ -3,18 +3,22 @@ package structures.graph;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UndirectedGraph implements GraphInterface {
+public class DirectedGraph implements GraphInterface {
     private List<GraphEdge>[] edges;
 
-    public UndirectedGraph(int verticesCount) {
-        this.edges = new ArrayList[verticesCount];
-        for (int i = 0; i < verticesCount; i++) edges[i] = new ArrayList<>();
+    public DirectedGraph(int v) {
+        this.edges = new List[v];
+        for (int i = 0; i < v; i++) this.edges[i] = new ArrayList<>();
     }
 
     @Override
     public void addEdge(GraphEdge edge) {
-        edges[edge.from].add(edge);
-        edges[edge.to].add(new GraphEdge(edge.to, edge.from, edge.weight));
+        this.edges[edge.from].add(edge);
+    }
+
+    @Override
+    public int getVerticesCount() {
+        return edges.length;
     }
 
     public List<GraphEdge>[] getEdges() {
@@ -34,10 +38,5 @@ public class UndirectedGraph implements GraphInterface {
             b.append("\n");
         }
         return b.toString();
-    }
-
-    @Override
-    public int getVerticesCount() {
-        return edges.length;
     }
 }
