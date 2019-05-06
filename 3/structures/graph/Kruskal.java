@@ -1,10 +1,5 @@
 package structures.graph;
 
-import structures.queue.BasicQueueElement;
-import structures.queue.HeapPriorityQueue;
-import structures.queue.PriorityQueueInterface;
-import structures.queue.QueueElementInterface;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,12 +46,12 @@ public class Kruskal {
 
         i = 0;
 
-        while (e < v-1) {
+        while (e < v - 1) {
             GraphEdge nextEdge = edges.get(i++);
             int x = find(subsets, nextEdge.from);
             int y = find(subsets, nextEdge.to);
 
-            if (x!=y) {
+            if (x != y) {
                 res[e++] = nextEdge;
                 union(subsets, x, y);
             }
