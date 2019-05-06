@@ -31,7 +31,7 @@ public class Main {
         /***
          * Dijkstra
          */
-        DirectedGraphDijkstra dijkstra = new DirectedGraphDijkstra(6);
+        DirectedGraph dijkstra = new DirectedGraph(6);
         dijkstra.addEdge(new GraphEdge(0, 1, 1));
         dijkstra.addEdge(new GraphEdge(1, 2, 1));
         dijkstra.addEdge(new GraphEdge(2, 5, 1));
@@ -41,8 +41,10 @@ public class Main {
         dijkstra.addEdge(new GraphEdge(3, 1, 2));
         dijkstra.addEdge(new GraphEdge(1, 5, 3));
 
+        Dijkstra d = new Dijkstra(dijkstra);
+
         System.out.println("Dijkstra shortest paths:");
-        for (List<Integer> l : dijkstra.shortestPath(0)) System.out.println(l);
+        for (List<Integer> l : d.shortestPath(0)) System.out.println(l);
 
         /***
          * KRUSKAL AND PRIM

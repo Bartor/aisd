@@ -9,48 +9,41 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DirectedGraphDijkstra implements GraphInterface {
-    private int[][] edges;
+public class Dijkstra {
+    private DirectedGraph graph;
 
-    public DirectedGraphDijkstra(int verticesCount) {
-        edges = new int[verticesCount][verticesCount];
-        for (int[] e : edges) for (int i = 0; i < e.length; i++) e[i] = -1;
-    }
-
-    @Override
-    public void addEdge(GraphEdge edge) {
-        edges[edge.from][edge.to] = edge.weight;
+    public Dijkstra(DirectedGraph graph) {
+        this.graph = graph;
     }
 
     public List<Integer>[] shortestPath(int from) {
-        int[] d = new int[edges.length];
-        int[] prev = new int[edges.length];
-        for (int i = 0; i < edges.length; i++) {
+        int[] d = new int[graph.getVerticesCount()];
+        int[] prev = new int[graph.getVerticesCount()];
+        for (int i = 0; i < graph.getVerticesCount(); i++) {
             d[i] = Integer.MAX_VALUE;
             prev[i] = -1;
         }
         d[from] = 0;
 
         PriorityQueueInterface q = new HeapPriorityQueue();
-        for (int i = 0; i < edges.length; i++) {
+        for (int i = 0; i < graph.getVerticesCount(); i++) {
             q.insert(new BasicQueueElement<Integer>(i, d[i]));
         }
 
         while (!q.empty()) {
             QueueElementInterface e = q.pop();
             int u = (Integer) e.getValue();
-            for (int i = 0; i < edges.length; i++) {
-                if (edges[u][i] > -1) {
-                    if (d[i] > d[u] + edges[u][i]) {
-                        d[i] = d[u] + edges[u][i];
-                        prev[i] = u;
-                        q.priority(new BasicQueueElement<Integer>(i, d[i]));
-                    }
+
+            for (GraphEdge edge : graph.getEdges()[u]) {
+                if (d[edge.to] > d[u] + edge.weight) {
+                    d[edge.to] = d[u] = edge.weight;
+                    prev[edge.to] = u;
+                    q.priority(new BasicQueueElement<Integer>(edge.to, d[edge.to]));
                 }
             }
         }
 
-        List<Integer>[] res = new List[edges.length];
+        List<Integer>[] res = new List[graph.getVerticesCount()];
         for (int i = 0; i < d.length; i++) {
             res[i] = new ArrayList<>();
             int curr = i;
@@ -62,10 +55,5 @@ public class DirectedGraphDijkstra implements GraphInterface {
             Collections.reverse(res[i]);
         }
         return res;
-    }
-
-    @Override
-    public int getVerticesCount() {
-        return edges.length;
     }
 }
