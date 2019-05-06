@@ -37,11 +37,10 @@ public class Kruskal {
         UndirectedGraph g = new UndirectedGraph(v);
 
         GraphEdge[] res = new GraphEdge[v];
-        int e = 0, i = 0;
+        int e = 0, i;
         for (i = 0; i < v; i++) res[i] = new GraphEdge(-1, -1, -1);
 
         edges.sort(GraphEdge::compareTo);
-        System.out.println(edges);
 
         subset[] subsets = new subset[v];
         for (i = 0; i < v; i++) {
