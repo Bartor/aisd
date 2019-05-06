@@ -5,6 +5,8 @@ import structures.queue.HeapPriorityQueue;
 import structures.queue.PriorityQueueInterface;
 import structures.queue.QueueElementInterface;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DirectedGraphDijkstra implements GraphInterface {
@@ -20,7 +22,7 @@ public class DirectedGraphDijkstra implements GraphInterface {
         edges[edge.from][edge.to] = edge.weight;
     }
 
-    public List<GraphEdge> shortestPath(int from) {
+    public List<Integer>[] shortestPath(int from) {
         int[] d = new int[edges.length];
         int[] prev = new int[edges.length];
         for (int i = 0; i < edges.length; i++) {
@@ -48,7 +50,22 @@ public class DirectedGraphDijkstra implements GraphInterface {
             }
         }
 
-        //todo return shortest and list
-        return null;
+        List<Integer>[] res = new List[edges.length];
+        for (int i = 0; i < d.length; i++) {
+            res[i] = new ArrayList<>();
+            int curr = i;
+            while (prev[curr] != -1) {
+                res[i].add(curr);
+                curr = prev[curr];
+            }
+            res[i].add(from);
+            Collections.reverse(res[i]);
+        }
+        return res;
+    }
+
+    @Override
+    public int getVerticesCount() {
+        return edges.length;
     }
 }
