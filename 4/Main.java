@@ -13,5 +13,8 @@ public class Main {
         tree.insert("i");
         tree.insert("a");
         System.out.println(tree.inOrder());
+        tree.delete("a");
+        tree.delete("z");
+        System.out.println(tree.inOrder());
     }
 }
