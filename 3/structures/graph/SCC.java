@@ -11,18 +11,6 @@ public class SCC {
         this.graph = graph;
     }
 
-    public List<Integer> getComponents(int v, boolean[] visited, List<Integer> current) {
-        visited[v] = true;
-        current.add(v);
-
-        for (GraphEdge edge : graph.getEdges()[v]) {
-            if (!visited[edge.to]) {
-                getComponents(edge.to, visited, current);
-            }
-        }
-        return current;
-    }
-
     private DirectedGraph transposed() {
         DirectedGraph g = new DirectedGraph(graph.getVerticesCount());
 
@@ -42,6 +30,16 @@ public class SCC {
         }
 
         stack.push(v);
+    }
+
+    public void lookUp(int v, boolean[] visited, List<Integer> current) {
+        visited[v] = true;
+        current.add(v);
+        //System.out.println(v + " ");
+
+        for (GraphEdge edge : graph.getEdges()[v]) {
+            if (!visited[edge.to]) lookUp(edge.to, visited, current);
+        }
     }
 
     public List<List<Integer>> scc() {
@@ -69,9 +67,14 @@ public class SCC {
         while(!stack.empty()) {
             int v = (int) stack.pop();
 
-            List<Integer> temp = new ArrayList<>();
+            List<Integer> c = new ArrayList<>();
 
-            res.add(scct.getComponents(v, visited, temp));
+            if (!visited[v]) {
+                scct.lookUp(v, visited, c);
+                //System.out.println();
+            }
+
+            if (!c.isEmpty()) res.add(c);
         }
 
         return res;
