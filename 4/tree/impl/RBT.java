@@ -35,17 +35,58 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
 
     @Override
     public void delete(T element) {
-
+        ColoredNode<T> z = lookUp(root, element);
+        if (z != null) {
+            ColoredNode<T> y = z;
+            Color yc = y.getColor();
+            ColoredNode<T> x;
+            if (z.getL() == guard) {
+                x = z.getR();
+                trans(z, z.getR());
+            } else if (z.getR() == guard) {
+                x = z.getL();
+                trans(z, z.getL());
+            } else {
+                y = min(z.getR());
+                yc = y.getColor();
+                x = y.getR();
+                if (y.getP() == z) {
+                    x.setP(y);
+                } else {
+                    trans(y, y.getR());
+                    y.setR(z.getR());
+                    y.getR().setP(y);
+                }
+                trans(z, y);
+                y.setL(z.getL());
+                y.getL().setP(y);
+                y.setColor(z.getColor());
+            }
+            if (yc == Color.B) deleteFix(x);
+        }
     }
 
     @Override
     public boolean search(T element) {
-        return false;
+        return lookUp(root, element) != null;
     }
 
     @Override
     public String inOrder() {
-        return null;
+        StringBuilder b = new StringBuilder();
+
+        inOrderBuilder(root, b);
+
+        return b.toString();
+    }
+
+    private void inOrderBuilder(ColoredNode<T> current, StringBuilder b) {
+        if (current != guard) {
+            inOrderBuilder(current.getL(), b);
+            b.append(current);
+            b.append("\n");
+            inOrderBuilder(current.getR(), b);
+        }
     }
 
     private void insertFix(ColoredNode<T> z) {
@@ -87,11 +128,123 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
         root.setColor(Color.B);
     }
 
-    private void rr(ColoredNode<T> y) {
+    private void deleteFix(ColoredNode<T> x) {
+        while(x != root && x.getColor() == Color.B) {
+            if (x == x.getP().getL()) {
+                ColoredNode<T> w = x.getP().getR();
+                if (w.getColor() == Color.R) {
+                    w.setColor(Color.B);
+                    x.getP().setColor(Color.R);
+                    lr(x.getP());
+                    w = x.getP().getR();
+                }
+                if (w.getL().getColor() == Color.B && w.getR().getColor() == Color.B) {
+                    w.setColor(Color.R);
+                    x = x.getP();
+                } else {
+                    if (w.getR().getColor() == Color.B) {
+                        w.getL().setColor(Color.B);
+                        w.setColor(Color.R);
+                        rr(w);
+                        w = x.getP().getR();
+                    }
+                    w.setColor(x.getP().getColor());
+                    x.getP().setColor(Color.B);
+                    w.getR().setColor(Color.B);
+                    lr(x.getP());
+                    x = root;
+                }
+            } else {
+                ColoredNode<T> w = x.getP().getL();
+                if (w.getColor() == Color.R) {
+                    w.setColor(Color.B);
+                    x.getP().setColor(Color.R);
+                    rr(x.getP());
+                    w = x.getP().getL();
+                }
+                if (w.getR().getColor() == Color.B && w.getL().getColor() == Color.B) {
+                    w.setColor(Color.R);
+                    x = x.getP();
+                } else {
+                    if (w.getL().getColor() == Color.B) {
+                        w.getR().setColor(Color.B);
+                        w.setColor(Color.R);
+                        lr(w);
+                        w = x.getP().getL();
+                    }
+                    w.setColor(x.getP().getColor());
+                    x.getP().setColor(Color.B);
+                    w.getL().setColor(Color.B);
+                    rr(x.getP());
+                    x = root;
+                }
+            }
+        }
+        x.setColor(Color.B);
+    }
 
+    private void rr(ColoredNode<T> y) {
+        ColoredNode<T> x = y.getL();
+        y.setL(x.getR());
+        if (y.getL() != guard) {
+            x.getR().setP(y);
+        }
+        x.setP(y.getP());
+        if (y.getP() == guard) {
+            root = x;
+        } else if (y == y.getP().getR()) {
+            y.getP().setR(x);
+        } else {
+            y.getP().setL(x);
+        }
+        x.setR(y);
+        y.setP(x);
     }
 
     private void lr(ColoredNode<T> x) {
+        ColoredNode<T> y = x.getR();
+        x.setR(y.getL());
+        if (y.getL() != guard) {
+            y.getL().setP(x);
+        }
+        y.setP(x.getP());
+        if (x.getP() == guard) {
+            this.root = y;
+        } else if (x == x.getP().getL()) {
+            x.getP().setL(y);
+        } else {
+            x.getP().setR(y);
+        }
+        y.setL(x);
+        x.setP(y);
+    }
 
+    private ColoredNode<T> lookUp(ColoredNode<T> x, T k) {
+        if (x == null || k.compareTo(x.getKey()) == 0) {
+            return x;
+        }
+        if (k.compareTo(x.getKey()) < 0) {
+            return lookUp(x.getL(), k);
+        } else {
+            return lookUp(x.getR(), k);
+        }
+    }
+
+    private void trans(ColoredNode<T> u, ColoredNode<T> v) {
+        if (u.getP() == guard) {
+            root = v;
+        } else  if (u == u.getP().getL()) {
+            u.getP().setL(v);
+        } else {
+            u.getP().setR(v);
+        }
+        v.setP(u.getP());
+    }
+
+    private ColoredNode<T> min(ColoredNode<T> x) {
+        while(x.getL() != guard) {
+            x = x.getL();
+        }
+        return x;
     }
 }

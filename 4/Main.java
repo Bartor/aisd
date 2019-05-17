@@ -1,8 +1,9 @@
 import tree.impl.BST;
+import tree.impl.RBT;
 
 public class Main {
     public static void main(String[] args) {
-        BST<String> tree = new BST<>();
+        RBT<String> tree = new RBT<>();
 
         tree.insert("a");
         tree.insert("z");
