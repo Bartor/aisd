@@ -16,15 +16,9 @@ public class Main {
     private static final int testNumber = 1;
 
     public static void main(String[] args) {
-        Stats rbts = new Stats();
-        Stats bsts = new Stats();
-        Stats spls = new Stats();
-        SplayTree<String> spl = new SplayTree<>(spls);
-        RBT<String> rbt = new RBT<>(rbts);
-        BST<String> bst = new BST<>(bsts);
-        spl.addDecorator(new BasicDecorator());
-        rbt.addDecorator(new BasicDecorator());
-        bst.addDecorator(new BasicDecorator());
+        SplayTree<String> spl = new SplayTree<>(new Stats());
+        RBT<String> rbt = new RBT<>(new Stats());
+        BST<String> bst = new BST<>(new Stats());
 
         TreeInterface[] trees = {rbt, spl, bst};
 
@@ -42,6 +36,10 @@ public class Main {
             System.out.println("\n#### TEST ITERATION " + (i + 1) + " ####\n");
             //we need an iterator index variables to access the results
             for (int j = 0; j < files.length; j++) {
+                trees[0] = new RBT<String>(new Stats());
+                trees[1] = new SplayTree<String>(new Stats());
+                trees[2] = new BST<String>(new Stats());
+
                 System.out.println("### File " + files[j] + " ###\n");
 
                 //load words, cause using in-tree load function is giving some overhead
