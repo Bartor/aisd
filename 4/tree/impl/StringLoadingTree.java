@@ -3,7 +3,9 @@ package tree.impl;
 import tree.TreeInterface;
 import tree.impl.decorators.StringDecoratorInterface;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -27,19 +29,25 @@ public abstract class StringLoadingTree<T extends Comparable<T>> implements Tree
     }
 
     @Override
-    public void load(File file) {
+    public List<String> load(File file) {
+        List<String> ret = new ArrayList<>();
+
         Scanner s;
         try {
             s = new Scanner(new FileInputStream(file));
         } catch (FileNotFoundException e) {
             System.out.println(e.getLocalizedMessage());
-            return;
+            return ret;
         }
         while (s.hasNextLine()) {
-            for (String word: s.nextLine().split(" ")) {
+            for (String word : s.nextLine().split(" ")) {
                 String insert = applyDecorators(word);
-                if (!insert.equals("")) insert((T) insert);
+                if (!insert.equals("")) {
+                    ret.add(insert);
+                    insert((T) insert);
+                }
             }
         }
+        return ret;
     }
 }
