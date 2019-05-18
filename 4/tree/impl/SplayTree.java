@@ -310,4 +310,9 @@ public class SplayTree<T extends Comparable<T>> extends StringLoadingTree<T> imp
         }
         return x;
     }
+
+    @Override
+    public String toString() {
+        return "SPLAY";
+    }
 }

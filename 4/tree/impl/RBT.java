@@ -307,4 +307,9 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
         }
         return x;
     }
+
+    @Override
+    public String toString() {
+        return "RBT";
+    }
 }
