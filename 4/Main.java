@@ -1,14 +1,9 @@
 import tree.impl.BST;
-import tree.impl.RBT;
 import tree.impl.decorators.BasicDecorator;
 import tree.structs.Stats;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
