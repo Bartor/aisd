@@ -3,10 +3,17 @@ package tree.impl;
 import tree.TreeInterface;
 import tree.structs.Color;
 import tree.structs.ColoredNode;
+import tree.structs.Stats;
 
 public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implements TreeInterface<T> {
     private ColoredNode<T> guard = new ColoredNode<>(null);
     private ColoredNode<T> root = guard;
+
+    private Stats stats;
+
+    public RBT(Stats stats) {
+        this.stats = stats;
+    }
 
     @Override
     public void insert(T element) {
@@ -15,18 +22,29 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
         ColoredNode<T> x = root;
 
         while (x != guard) {
+            stats.nodeComp++;
+            stats.nodeChange++;
             y = x;
+            stats.keyComp++;
             x = z.compareTo(x) < 0 ? x.getL() : x.getR();
         }
 
+        stats.nodeChange++;
         z.setP(y);
+        stats.nodeComp++;
         if (y == guard) {
+            stats.nodeChange++;
             root = z;
         } else if (z.compareTo(y) < 0) {
+            stats.nodeChange++;
+            stats.nodeComp++;
             y.setL(z);
         } else {
+            stats.nodeChange++;
+            stats.nodeComp++;
             y.setR(z);
         }
+        stats.nodeChange += 2;
         z.setL(guard);
         z.setR(guard);
         z.setColor(Color.R);
@@ -36,28 +54,36 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
     @Override
     public void delete(T element) {
         ColoredNode<T> z = lookUp(root, element);
+        stats.nodeComp++;
         if (z != null) {
             ColoredNode<T> y = z;
             Color yc = y.getColor();
             ColoredNode<T> x;
+            stats.nodeComp++;
             if (z.getL() == guard) {
                 x = z.getR();
                 trans(z, z.getR());
             } else if (z.getR() == guard) {
+                stats.nodeComp++;
                 x = z.getL();
                 trans(z, z.getL());
             } else {
+                stats.nodeComp++;
                 y = min(z.getR());
                 yc = y.getColor();
                 x = y.getR();
+                stats.nodeComp++;
                 if (y.getP() == z) {
+                    stats.nodeChange++;
                     x.setP(y);
                 } else {
                     trans(y, y.getR());
+                    stats.nodeChange += 2;
                     y.setR(z.getR());
                     y.getR().setP(y);
                 }
                 trans(z, y);
+                stats.nodeChange += 2;
                 y.setL(z.getL());
                 y.getL().setP(y);
                 y.setColor(z.getColor());
@@ -91,6 +117,7 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
 
     private void insertFix(ColoredNode<T> z) {
         while (z.getP().getColor() == Color.R) {
+            stats.nodeComp++;
             if (z.getP() == z.getP().getP().getL()) {
                 ColoredNode<T> y = z.getP().getP().getR();
                 if (y.getColor() == Color.R) {
@@ -130,6 +157,7 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
 
     private void deleteFix(ColoredNode<T> x) {
         while(x != root && x.getColor() == Color.B) {
+            stats.nodeComp += 2;
             if (x == x.getP().getL()) {
                 ColoredNode<T> w = x.getP().getR();
                 if (w.getColor() == Color.R) {
@@ -185,42 +213,66 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
 
     private void rr(ColoredNode<T> y) {
         ColoredNode<T> x = y.getL();
+        stats.nodeChange++;
         y.setL(x.getR());
+        stats.nodeComp++;
         if (y.getL() != guard) {
+            stats.nodeChange++;
             x.getR().setP(y);
         }
+        stats.nodeChange++;
         x.setP(y.getP());
+        stats.nodeComp++;
         if (y.getP() == guard) {
+            stats.nodeChange++;
             root = x;
         } else if (y == y.getP().getR()) {
+            stats.nodeComp++;
+            stats.nodeChange++;
             y.getP().setR(x);
         } else {
+            stats.nodeComp++;
+            stats.nodeChange++;
             y.getP().setL(x);
         }
+        stats.nodeChange += 2;
         x.setR(y);
         y.setP(x);
     }
 
     private void lr(ColoredNode<T> x) {
         ColoredNode<T> y = x.getR();
+        stats.nodeChange++;
         x.setR(y.getL());
+        stats.nodeComp++;
         if (y.getL() != guard) {
+            stats.nodeChange++;
             y.getL().setP(x);
         }
+        stats.nodeChange++;
         y.setP(x.getP());
+        stats.nodeComp++;
         if (x.getP() == guard) {
+            stats.nodeChange++;
             this.root = y;
         } else if (x == x.getP().getL()) {
+            stats.nodeComp++;
+            stats.nodeChange++;
             x.getP().setL(y);
         } else {
+            stats.nodeComp++;
+            stats.nodeChange++;
             x.getP().setR(y);
         }
+        stats.nodeChange += 2;
         y.setL(x);
         x.setP(y);
     }
 
     private ColoredNode<T> lookUp(ColoredNode<T> x, T k) {
         while (x != guard && k.compareTo(x.getKey()) != 0) {
+            stats.nodeComp++;
+            stats.keyComp += 2;
             if (k.compareTo(x.getKey()) < 0) {
                 x = x.getL();
             } else {
@@ -231,18 +283,26 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
     }
 
     private void trans(ColoredNode<T> u, ColoredNode<T> v) {
+        stats.nodeComp++;
         if (u.getP() == guard) {
+            stats.nodeChange++;
             root = v;
-        } else  if (u == u.getP().getL()) {
+        } else if (u == u.getP().getL()) {
+            stats.nodeComp++;
+            stats.nodeChange++;
             u.getP().setL(v);
         } else {
+            stats.nodeComp++;
+            stats.nodeChange++;
             u.getP().setR(v);
         }
+        stats.nodeChange++;
         v.setP(u.getP());
     }
 
     private ColoredNode<T> min(ColoredNode<T> x) {
         while(x.getL() != guard) {
+            stats.nodeComp++;
             x = x.getL();
         }
         return x;

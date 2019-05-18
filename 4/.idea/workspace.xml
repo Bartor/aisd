@@ -6,10 +6,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e26a957b-6e75-4edc-9902-bcfec9e83507" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/tree/structs/Stats.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tree/impl/BST.java" beforeDir="false" afterPath="$PROJECT_DIR$/tree/impl/BST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree/impl/RBT.java" beforeDir="false" afterPath="$PROJECT_DIR$/tree/impl/RBT.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tree/impl/SplayTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/tree/impl/SplayTree.java" afterDir="false" />
     </list>
     <ignored path="out/" />
@@ -24,8 +24,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="25" column="132" selection-start-line="25" selection-start-column="132" selection-end-line="25" selection-end-column="132" />
+            <state relative-caret-position="230">
+              <caret line="10" column="34" lean-forward="true" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -49,10 +49,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tree/impl/RBT.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1035">
-              <caret line="228" column="9" lean-forward="true" selection-start-line="228" selection-start-column="9" selection-end-line="228" selection-end-column="9" />
+            <state relative-caret-position="-349">
+              <caret line="277" column="20" lean-forward="true" selection-start-line="277" selection-start-column="20" selection-end-line="277" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#392#393#0" expanded="true" />
+                <element signature="e#426#427#0" expanded="true" />
                 <element signature="e#1939#1940#0" expanded="true" />
                 <element signature="e#1991#1992#0" expanded="true" />
               </folding>
@@ -97,8 +99,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tree/impl/BST.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="139" column="31" selection-start-line="139" selection-start-column="31" selection-end-line="139" selection-end-column="31" />
+            <state relative-caret-position="1077">
+              <caret line="139" column="29" selection-start-line="139" selection-start-column="29" selection-end-line="139" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1409#1410#0" expanded="true" />
@@ -185,9 +187,9 @@
         <option value="$PROJECT_DIR$/tree/impl/StringLoadingTree.java" />
         <option value="$PROJECT_DIR$/tree/impl/decorators/BasicDecorator.java" />
         <option value="$PROJECT_DIR$/tree/impl/SplayTree.java" />
-        <option value="$PROJECT_DIR$/tree/impl/RBT.java" />
         <option value="$PROJECT_DIR$/tree/TreeInterface.java" />
         <option value="$PROJECT_DIR$/tree/structs/Stats.java" />
+        <option value="$PROJECT_DIR$/tree/impl/RBT.java" />
         <option value="$PROJECT_DIR$/tree/impl/BST.java" />
         <option value="$PROJECT_DIR$/Main.java" />
       </list>
@@ -244,7 +246,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558170864727" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558171499709" />
     <property name="jdk.selected.JAVA_MODULE" value="11" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/out" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -302,7 +304,7 @@
       <workItem from="1558099262956" duration="5001000" />
       <workItem from="1558104287187" duration="32000" />
       <workItem from="1558104604034" duration="56000" />
-      <workItem from="1558167848508" duration="3014000" />
+      <workItem from="1558167848508" duration="3641000" />
     </task>
     <task id="LOCAL-00001" summary="delikatna zmiana gitinore">
       <created>1558022652243</created>
@@ -360,11 +362,18 @@
       <option name="project" value="LOCAL" />
       <updated>1558169930310</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="statystyki w BST">
+      <created>1558170881049</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1558170881049</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12931000" />
+    <option name="totallyTimeSpent" value="13558000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -388,7 +397,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32107022" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5406912" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -465,7 +474,8 @@
     <MESSAGE value="zadaniowe dekoratory i dane" />
     <MESSAGE value="usunięto przypadkowy commit .class" />
     <MESSAGE value="poprawka w RBT i dekoratorze" />
-    <option name="LAST_COMMIT_MESSAGE" value="poprawka w RBT i dekoratorze" />
+    <MESSAGE value="statystyki w BST" />
+    <option name="LAST_COMMIT_MESSAGE" value="statystyki w BST" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tree/structs/Color.java">
@@ -572,22 +582,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tree/impl/RBT.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="228" column="9" lean-forward="true" selection-start-line="228" selection-start-column="9" selection-end-line="228" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1939#1940#0" expanded="true" />
-            <element signature="e#1991#1992#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tree/impl/BST.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="139" column="31" selection-start-line="139" selection-start-column="31" selection-end-line="139" selection-end-column="31" />
+        <state relative-caret-position="1077">
+          <caret line="139" column="29" selection-start-line="139" selection-start-column="29" selection-end-line="139" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1409#1410#0" expanded="true" />
@@ -596,10 +594,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tree/impl/RBT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-349">
+          <caret line="277" column="20" lean-forward="true" selection-start-line="277" selection-start-column="20" selection-end-line="277" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#392#393#0" expanded="true" />
+            <element signature="e#426#427#0" expanded="true" />
+            <element signature="e#1939#1940#0" expanded="true" />
+            <element signature="e#1991#1992#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="25" column="132" selection-start-line="25" selection-start-column="132" selection-end-line="25" selection-end-column="132" />
+        <state relative-caret-position="230">
+          <caret line="10" column="34" lean-forward="true" selection-start-line="10" selection-start-column="34" selection-end-line="10" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

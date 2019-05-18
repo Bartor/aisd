@@ -24,6 +24,7 @@ public class BST<T extends Comparable<T>> extends StringLoadingTree<T> implement
 
         while (x != null) {
             stats.nodeComp++;
+            stats.nodeChange++;
             y = x;
             stats.keyComp++;
             x = e.compareTo(x) < 0 ? x.getL() : x.getR();
@@ -137,7 +138,6 @@ public class BST<T extends Comparable<T>> extends StringLoadingTree<T> implement
     private Node<T> min(Node<T> x) {
         while (x.getL() != null) {
             stats.nodeComp++;
-            stats.nodeChange++;
             x = x.getL();
         }
         return x;
