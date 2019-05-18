@@ -68,7 +68,7 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
 
     @Override
     public boolean search(T element) {
-        return lookUp(root, element) != null;
+        return lookUp(root, element) != guard;
     }
 
     @Override
@@ -220,14 +220,14 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
     }
 
     private ColoredNode<T> lookUp(ColoredNode<T> x, T k) {
-        if (x == null || k.compareTo(x.getKey()) == 0) {
-            return x;
+        while (x != guard && k.compareTo(x.getKey()) != 0) {
+            if (k.compareTo(x.getKey()) < 0) {
+                x = x.getL();
+            } else {
+                x = x.getR();
+            }
         }
-        if (k.compareTo(x.getKey()) < 0) {
-            return lookUp(x.getL(), k);
-        } else {
-            return lookUp(x.getR(), k);
-        }
+        return x;
     }
 
     private void trans(ColoredNode<T> u, ColoredNode<T> v) {
