@@ -328,4 +328,8 @@ public class SplayTree<T extends Comparable<T>> extends StringLoadingTree<T> imp
     public String toString() {
         return "SPLAY";
     }
+
+    public Stats getStats() {
+        return stats;
+    }
 }

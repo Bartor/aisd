@@ -147,4 +147,8 @@ public class BST<T extends Comparable<T>> extends StringLoadingTree<T> implement
     public String toString() {
         return "BST";
     }
+
+    public Stats getStats() {
+        return stats;
+    }
 }

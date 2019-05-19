@@ -16,11 +16,7 @@ public class Main {
     private static final int testNumber = 1;
 
     public static void main(String[] args) {
-        SplayTree<String> spl = new SplayTree<>(new Stats());
-        RBT<String> rbt = new RBT<>(new Stats());
-        BST<String> bst = new BST<>(new Stats());
-
-        TreeInterface[] trees = {rbt, spl, bst};
+        TreeInterface[] trees = new TreeInterface[3];
 
         File aspell = new File("data/aspell_wordlist.txt");
         File kjb = new File("data/kjb.txt");
@@ -31,6 +27,7 @@ public class Main {
 
         //for every file, every tree and then insert, search, delete
         long[][][] results = new long[files.length][trees.length][3];
+        Stats[][][] stats = new Stats[files.length][trees.length][3];
 
         for (int i = 0; i < testNumber; i++) {
             System.out.println("\n#### TEST ITERATION " + (i + 1) + " ####\n");
@@ -55,6 +52,7 @@ public class Main {
                         trees[k].insert(word);
                     }
                     results[j][k][0] += (System.nanoTime() - t) / testNumber;
+                    stats[j][k][0] = trees[k].getStats();
                     System.out.println("done in " + (System.nanoTime() - t) + " ns");
 
                     System.out.print("Search... ");
@@ -63,6 +61,7 @@ public class Main {
                         trees[k].search(word);
                     }
                     results[j][k][1] += (System.nanoTime() - t) / testNumber;
+                    stats[j][k][1] = trees[k].getStats();
                     System.out.println("done in " + (System.nanoTime() - t) + " ns");
 
                     System.out.print("Delete... ");
@@ -71,12 +70,13 @@ public class Main {
                         trees[k].delete(word);
                     }
                     results[j][k][2] += (System.nanoTime() - t) / testNumber;
+                    stats[j][k][2] = trees[k].getStats();
                     System.out.println("done in " + (System.nanoTime() - t) + " ns\n");
                 }
             }
         }
 
-        System.out.println("Final, csv results:\n");
+        System.out.println("Time results:\n");
 
         for (long[][] a : results) {
             for (int i = 0; i < a.length; i++) {
@@ -87,6 +87,27 @@ public class Main {
                 System.out.println();
             }
         }
+
+        System.out.println("Stats changes:\n");
+        for (Stats[][] a : stats) {
+            for (int i = 0; i < a.length; i++) {
+                System.out.print(trees[i] + ",");
+                for (int j = 0; j < a[i].length; j++) {
+                    System.out.println((j == 0 ? a[i][j].nodeChange : (a[i][j].nodeChange - a[i][j-1].nodeChange)) + ",");
+                }
+            }
+        }
+
+        System.out.println("Stats comparisons:\n");
+        for (Stats[][] a : stats) {
+            for (int i = 0; i < a.length; i++) {
+                System.out.print(trees[i] + ",");
+                for (int j = 0; j < a[i].length; j++) {
+                    System.out.println((j == 0 ? a[i][j].keyComp + a[i][j].nodeComp : (a[i][j].keyComp + a[i][j].nodeComp - a[i][j-1].nodeComp - a[i][j-1].keyComp)) + ",");
+                }
+            }
+        }
+
     }
 }
 

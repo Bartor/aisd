@@ -312,4 +312,8 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
     public String toString() {
         return "RBT";
     }
+
+    public Stats getStats() {
+        return stats;
+    }
 }
