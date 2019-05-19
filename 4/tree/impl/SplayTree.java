@@ -81,12 +81,16 @@ public class SplayTree<T extends Comparable<T>> extends StringLoadingTree<T> imp
                     parent.setL(n.getR());
                     stats.nodeComp++;
                     if (n.getR() != null) n.getR().setP(parent);
+                    stats.nodeChange += 2;
+
                     n.setR(parent);
                     parent.setP(n);
                 } else {
                     parent.setR(n.getL());
                     stats.nodeComp++;
                     if (n.getL() != null) n.getL().setP(parent);
+                    stats.nodeChange += 2;
+
                     n.setL(parent);
                     parent.setP(n);
                 }
@@ -101,9 +105,13 @@ public class SplayTree<T extends Comparable<T>> extends StringLoadingTree<T> imp
                 Node<T> ggp = gp.getP();
                 stats.nodeComp += 2;
                 if (ggp != null && ggp.getL() == gp) {
+                    stats.nodeChange += 2;
+
                     ggp.setL(n);
                     n.setP(ggp);
                 } else if (ggp != null && ggp.getR() == gp) {
+                    stats.nodeChange += 2;
+
                     stats.nodeComp += 2;
                     ggp.setR(n);
                     n.setP(ggp);
@@ -118,6 +126,7 @@ public class SplayTree<T extends Comparable<T>> extends StringLoadingTree<T> imp
                     stats.nodeComp++;
                     if (n == parent.getL()) {
                         Node<T> nr = n.getR();
+                        stats.nodeChange += 2;
                         n.setR(parent);
                         parent.setP(n);
 
@@ -134,6 +143,7 @@ public class SplayTree<T extends Comparable<T>> extends StringLoadingTree<T> imp
                         if (pr != null) pr.setP(gp);
                     } else {
                         Node<T> nl = n.getL();
+                        stats.nodeChange += 2;
                         n.setL(parent);
                         parent.setP(n);
 
@@ -157,6 +167,7 @@ public class SplayTree<T extends Comparable<T>> extends StringLoadingTree<T> imp
                     Node<T> nl = n.getR();
                     Node<T> nr = n.getL();
 
+                    stats.nodeChange += 4;
                     n.setR(parent);
                     parent.setP(n);
 
@@ -177,12 +188,14 @@ public class SplayTree<T extends Comparable<T>> extends StringLoadingTree<T> imp
                 Node<T> nl = n.getL();
                 Node<T> nr = n.getR();
 
+                stats.nodeChange += 4;
                 n.setL(parent);
                 parent.setP(n);
 
                 n.setR(gp);
                 gp.setP(n);
 
+                stats.nodeChange += 4;
                 parent.setR(nl);
                 stats.nodeComp++;
                 if (nl != null) nl.setP(parent);
