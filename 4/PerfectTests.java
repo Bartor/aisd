@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PerfectTests {
     public static void main(String[] args) {
-        File bstf = new File("gen/pbst.txt");
+        File bstf = new File("gen/pbst2.txt");
 
         TreeInterface[] trees = new TreeInterface[3];
         File[] files = {bstf};

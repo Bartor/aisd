@@ -156,8 +156,7 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
     }
 
     private void deleteFix(ColoredNode<T> x) {
-        while(x != root && x.getColor() == Color.B) {
-            stats.nodeComp += 2;
+        while (x != this.root && x.getColor() == Color.B) {
             if (x == x.getP().getL()) {
                 ColoredNode<T> w = x.getP().getR();
                 if (w.getColor() == Color.R) {
@@ -180,7 +179,7 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
                     x.getP().setColor(Color.B);
                     w.getR().setColor(Color.B);
                     lr(x.getP());
-                    x = root;
+                    x = this.root;
                 }
             } else {
                 ColoredNode<T> w = x.getP().getL();
@@ -204,7 +203,7 @@ public class RBT<T extends Comparable<T>> extends StringLoadingTree<T> implement
                     x.getP().setColor(Color.B);
                     w.getL().setColor(Color.B);
                     rr(x.getP());
-                    x = root;
+                    x = this.root;
                 }
             }
         }

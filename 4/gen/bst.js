@@ -27,4 +27,4 @@ function generate(n) {
 }
 
 //generate 10000 lines of example data
-console.log(generate(Array(10000).fill(0).map((e, i) => i)).map(e => numToString(e, 1000)).join("\n"));
+console.log(generate(Array(8096).fill(0).map((e, i) => i)).map(e => numToString(e, 300)).join("\n"));
