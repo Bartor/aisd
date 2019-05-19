@@ -31,17 +31,17 @@ public class PerfectTests {
                 for (String word : words) {
                     t.insert(word);
                 }
-                System.out.println("insert done in " + (System.nanoTime() - time));
+                System.out.println("insert done in " + (System.nanoTime() - time)/1000000f);
                 time = System.nanoTime();
                 for (String word : words) {
                     t.search(word);
                 }
-                System.out.println("search done in " + (System.nanoTime() - time));
+                System.out.println("search done in " + (System.nanoTime() - time)/1000000f);
                 time = System.nanoTime();
                 for (String word : words) {
                     t.delete(word);
                 }
-                System.out.println("delete done in " + (System.nanoTime() - time));
+                System.out.println("delete done in " + (System.nanoTime() - time)/1000000f);
             }
         }
     }
