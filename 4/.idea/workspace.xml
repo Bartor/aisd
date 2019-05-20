@@ -7,10 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e26a957b-6e75-4edc-9902-bcfec9e83507" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/gen/psplay.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen/splay.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PerfectTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/PerfectTests.java" afterDir="false" />
     </list>
     <ignored path="out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,8 +21,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PerfectTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
-              <caret line="33" column="47" lean-forward="true" selection-start-line="33" selection-start-column="47" selection-end-line="33" selection-end-column="47" />
+            <state relative-caret-position="284">
+              <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -201,7 +198,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1913" />
+    <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -268,7 +265,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558346888214" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558347225806" />
     <property name="jdk.selected.JAVA_MODULE" value="11" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/out" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -353,7 +350,7 @@
       <workItem from="1558297292571" duration="3508000" />
       <workItem from="1558303063190" duration="15000" />
       <workItem from="1558305185707" duration="52000" />
-      <workItem from="1558346606313" duration="277000" />
+      <workItem from="1558346606313" duration="526000" />
     </task>
     <task id="LOCAL-00001" summary="delikatna zmiana gitinore">
       <created>1558022652243</created>
@@ -551,11 +548,18 @@
       <option name="project" value="LOCAL" />
       <updated>1558305218331</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="dane idealne dla splay">
+      <created>1558346966993</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1558346966993</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33515000" />
+    <option name="totallyTimeSpent" value="33764000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -567,10 +571,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="1913" y="0" width="974" height="1047" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16311301" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.33479214" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -579,7 +582,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.34671125" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.35022524" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -648,7 +651,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="działające RBT" />
     <MESSAGE value="splay" />
     <MESSAGE value="zadaniowe dekoratory i dane" />
     <MESSAGE value="usunięto przypadkowy commit .class" />
@@ -673,7 +675,8 @@
     <MESSAGE value="czasy w ms" />
     <MESSAGE value="zbieranie danych idealnych" />
     <MESSAGE value="dodano sprawozdanie" />
-    <option name="LAST_COMMIT_MESSAGE" value="dodano sprawozdanie" />
+    <MESSAGE value="dane idealne dla splay" />
+    <option name="LAST_COMMIT_MESSAGE" value="dane idealne dla splay" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tree/structs/Color.java">
@@ -852,8 +855,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PerfectTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="33" column="47" lean-forward="true" selection-start-line="33" selection-start-column="47" selection-end-line="33" selection-end-column="47" />
+        <state relative-caret-position="284">
+          <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
