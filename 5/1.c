@@ -15,7 +15,7 @@ int** generate(int k) {
 		for (int j = 0; j < k; j++) {
 			if (!((1<<j) & i)) {
 				t[i][j] = rand() % (numberOfSetBits(i) > 16 ? (1 << numberOfSetBits(i)) : (1 << (31 - numberOfSetBits(i)))) + 1;
-			}
+			} else t[i][j] = 0;
 		}
 	}
 	return t;
@@ -29,6 +29,7 @@ int main(void) {
 		for (int j = 0; j < SIZE; j++) printf("%10d ", graph[i][j]);
 		printf("\n");
 	}
+	for (int i = 0; i < 1 << SIZE; i++) free(graph[i]);
 	free(graph);
 	return 0;
 }
