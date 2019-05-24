@@ -23,6 +23,7 @@ int** generate(int k) {
 
 int main(void) {
 	int SIZE = 4;
+	srand(time(NULL));
 	int** graph = generate(SIZE);
 	for (int i = 0; i < 1 << SIZE; i++) {
 		for (int j = 0; j < SIZE; j++) printf("%10d ", graph[i][j]);
