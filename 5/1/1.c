@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "queue.h"
 
@@ -52,7 +53,7 @@ int bfs(int** graph, int size, int start, int end, int* parent) {
 	return visited[end] == 1;
 }
 
-int fordFulkerson(int** graph, int size, int start, int end) {
+int fordFulkerson(int** graph, int size, int start, int end, int* paths) {
 	int** rGraph = malloc((1 << size)*sizeof(int*));
 	for (int i = 0; i < (1 << size); i++) {
 		rGraph[i] = malloc(size * sizeof(int));
@@ -65,6 +66,7 @@ int fordFulkerson(int** graph, int size, int start, int end) {
 	int maxFlow = 0;
 
 	while (bfs(rGraph, size, start, end, parent)) {
+		*paths = *paths + 1;
 		int pathFlow = INT_MAX;
 		for (int v = end; v != start; v = parent[v]) {
 			int u = parent[v];
@@ -83,15 +85,29 @@ int fordFulkerson(int** graph, int size, int start, int end) {
 } 
 
 int main(void) {
-	int SIZE = 3;
+	int SIZE = 16;
+	int REPS = 10;
 	srand(time(NULL));
-	int** graph = generate(SIZE);
-	for (int i = 0; i < 1 << SIZE; i++) {
-		for (int j = 0; j < SIZE; j++) printf("%10d ", graph[i][j]);
-		printf("\n");
+	printf("--i\
+	-------------flow\
+	-------------time\
+	------------paths\n\n");
+	for (int i = 1; i <= SIZE; i++) {
+		printf("%3d, ", i);
+		float mFlow = 0, mTime = 0, mPaths = 0;
+		for (int j = 0; j < REPS; j++) {
+			int** graph = generate(i);
+
+			int paths = 0;
+			clock_t s = clock();
+			mFlow += 1.0*fordFulkerson(graph, i, 0, (1 << i) - 1, &paths)/REPS;
+			mTime += (1.0*(clock() - s)/CLOCKS_PER_SEC)/REPS;
+			mPaths += 1.0*paths/REPS;
+
+			for (int k = 0; k < 1 << i; k++) free(graph[k]);
+			free(graph);
+		}
+		printf("%20f, %20f, %20f\n", mFlow, mTime, mPaths);
 	}
-	printf("ff: %d\n", fordFulkerson(graph, SIZE, 0, (1 << SIZE) - 1));
-	for (int i = 0; i < 1 << SIZE; i++) free(graph[i]);
-	free(graph);
 	return 0;
 }
