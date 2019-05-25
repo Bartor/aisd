@@ -14,8 +14,8 @@ static inline int ilog2(int x) {
 
 static inline int numberOfSetBits(int i) {
 	i = i - ((i >> 1) & 0x55555555);
-  i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
-  return (((i + (i >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
+  	i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
+	return (((i + (i >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
 }
 
 int** generate(int k) {
@@ -86,12 +86,9 @@ int fordFulkerson(int** graph, int size, int start, int end, int* paths) {
 
 int main(void) {
 	int SIZE = 16;
-	int REPS = 10;
+	int REPS = 100;
 	srand(time(NULL));
-	printf("--i\
-	-------------flow\
-	-------------time\
-	------------paths\n\n");
+	printf("i, flow, time, paths\n");
 	for (int i = 1; i <= SIZE; i++) {
 		printf("%3d, ", i);
 		float mFlow = 0, mTime = 0, mPaths = 0;
