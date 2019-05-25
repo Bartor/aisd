@@ -2,3 +2,6 @@
 !*.*
 *.o
 *.out
+*.bin
+/.vscode
+*.exe
