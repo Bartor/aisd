@@ -14,7 +14,8 @@ int** generate(int k) {
 		t[i] = malloc(k * sizeof(int));
 		for (int j = 0; j < k; j++) {
 			if (!((1<<j) & i)) {
-				t[i][j] = rand() % (numberOfSetBits(i) > 16 ? (1 << numberOfSetBits(i)) : (1 << (31 - numberOfSetBits(i)))) + 1;
+				int ones = numberOfSetBits(i);
+				t[i][j] = rand() % (ones + 1 > k - ones ? 1 << (ones + 1) : 1 << (k - ones)) + 1;
 			} else t[i][j] = 0;
 		}
 	}
@@ -22,7 +23,7 @@ int** generate(int k) {
 }
 
 int main(void) {
-	int SIZE = 4;
+	int SIZE = 8;
 	srand(time(NULL));
 	int** graph = generate(SIZE);
 	for (int i = 0; i < 1 << SIZE; i++) {
