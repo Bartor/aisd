@@ -5,6 +5,12 @@
 
 #include "queue.h"
 
+#define clz(x) __builtin_clz(x)
+
+static inline int ilog2(int x) {
+	return sizeof(int) * CHAR_BIT - clz(x) - 1;
+}
+
 static inline int numberOfSetBits(int i) {
 	i = i - ((i >> 1) & 0x55555555);
   i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
@@ -12,7 +18,7 @@ static inline int numberOfSetBits(int i) {
 }
 
 int** generate(int k) {
-	int** t = malloc((1<<k)*k*sizeof(int*));
+	int** t = malloc((1<<k)*sizeof(int*));
 	for (int i = 0; i < (1<<k); i++) {
 		t[i] = malloc(k * sizeof(int));
 		int ones = numberOfSetBits(i);
@@ -46,6 +52,36 @@ int bfs(int** graph, int size, int start, int end, int* parent) {
 	return visited[end] == 1;
 }
 
+int fordFulkerson(int** graph, int size, int start, int end) {
+	int** rGraph = malloc((1 << size)*sizeof(int*));
+	for (int i = 0; i < (1 << size); i++) {
+		rGraph[i] = malloc(size * sizeof(int));
+		for (int j = 0; j < size; j++) {
+			rGraph[i][j] = graph[i][j];
+		}
+	}
+
+	int parent[1 << size];
+	int maxFlow = 0;
+
+	while (bfs(rGraph, size, start, end, parent)) {
+		int pathFlow = INT_MAX;
+		for (int v = end; v != start; v = parent[v]) {
+			int u = parent[v];
+			pathFlow = pathFlow > rGraph[u][ilog2(u^v)] ? rGraph[u][ilog2(u^v)] : pathFlow;
+		}
+
+		for (int v = end; v != start; v = parent[v]) {
+			int u = parent[v];
+			rGraph[u][ilog2(u^v)] -= pathFlow;
+			rGraph[v][ilog2(u^v)] += pathFlow;
+		}
+		maxFlow += pathFlow;
+	}
+
+	return maxFlow;
+} 
+
 int main(void) {
 	int SIZE = 3;
 	srand(time(NULL));
@@ -54,8 +90,7 @@ int main(void) {
 		for (int j = 0; j < SIZE; j++) printf("%10d ", graph[i][j]);
 		printf("\n");
 	}
-	int parent[1 << SIZE];
-	printf("path: %d\n", bfs(graph, SIZE, 4, 5, parent));
+	printf("ff: %d\n", fordFulkerson(graph, SIZE, 0, (1 << SIZE) - 1));
 	for (int i = 0; i < 1 << SIZE; i++) free(graph[i]);
 	free(graph);
 	return 0;
