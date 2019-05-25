@@ -12,11 +12,10 @@ int** generate(int k) {
 	int** t = malloc((1<<k)*k*sizeof(int*));
 	for (int i = 0; i < (1<<k); i++) {
 		t[i] = malloc(k * sizeof(int));
+		int ones = numberOfSetBits(i);
+		int limit = (ones + 1 > k - ones ? 1 << (ones + 1) : 1 << (k - ones));
 		for (int j = 0; j < k; j++) {
-			if (!((1<<j) & i)) {
-				int ones = numberOfSetBits(i);
-				t[i][j] = rand() % (ones + 1 > k - ones ? 1 << (ones + 1) : 1 << (k - ones)) + 1;
-			} else t[i][j] = 0;
+			t[i][j] = !((1<<j) & i) ? rand() % limit + 1 : 0;
 		}
 	}
 	return t;
