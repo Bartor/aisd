@@ -1,58 +1,52 @@
-#include "queue.h"
 #include <stdlib.h>
 
-/* simple implementation of POSITIVE-only integer queue */
+#include "queue.h"
+
+Queue qNew(int size) {
+    int* arr = malloc(size*sizeof(int));
+    Queue q = {
+        -1,
+        -1,
+        size,
+        arr,
+        0,
+        0
+    };
+    return q;
+}
 
 void qPush(Queue* q, int e) {
-    if (q->size == 0) {
-        Item* item = malloc(sizeof(Item));
-        item->next = NULL;
-        item->value = e;
-
-        q->front = item;
-        q->rear = item;
-    } else if (q->size == 1) {
-        Item* item = malloc(sizeof(Item));
-        item->next = NULL;
-        item->value = e;
-
-        q->rear = item;
-        q->front->next = item;
-    } else {
-        Item* item = malloc(sizeof(Item));
-        item->next = NULL;
-        item->value = e;
-
-        q->rear->next = item;
-        q->rear = item;
+    q->elements++;
+    if (q->front == -1) {
+        q->front = 0;
     }
-    q->size++;
+    if (q->rear == q->size - 1) {
+        q->rear = 0;
+        q->overflow = 1;
+        q->array[q->rear] = e;
+    } else {
+        q->rear++;
+        q->array[q->rear] = e;
+    }
 }
 
 int qPop(Queue* q) {
-    if (q->size == 0) return -1;
-    else if (q->size == 1) {
-        int ret = q->front->value;
-        free(q->front);
-        q->front = NULL;
-        q->size = 0;
-        return ret;
-    } else {
-        Item* front = q->front;
-        int ret = front->value;
-        q->front = q->front->next;
-        free(front);
-        q->size--;
-        return ret;
-    }
+    q->elements--;
+    if (q->front == -1) return -1;
+    if (q->front == q->size - 1) {
+        if (!q->overflow) return -1;
+        q->overflow = 0;
+        q->front = 0;
+        return q->array[q->size - 1];
+    } else return q->array[q->front++];
 }
 
 int qFront(Queue* q) {
-    if (q->size == 0) return -1;
-    return q->front->value;
+    if (q->front == -1) return -1;
+    return q->array[q->front];
 }
 
 int qBack(Queue* q) {
-    if (q->size == 0) return -1;
-    return q->rear->value;
+    if (q->front == -1) return -1;
+    return q->array[q->rear];
 }

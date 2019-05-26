@@ -7,15 +7,10 @@ typedef struct Item {
 } Item;
 
 typedef struct {
-    int rear;
-    int front;
+    Item* front;
+    Item* rear;
     int size;
-    int* array;
-    int overflow;
-    int elements;
 } Queue;
-
-Queue qNew(int size);
 
 void qPush(Queue* q, int e);
 
