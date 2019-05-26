@@ -50,3 +50,7 @@ int qBack(Queue* q) {
     if (q->front == -1) return -1;
     return q->array[q->rear];
 }
+
+void qDelete(Queue* q) {
+    free(q->array);
+}

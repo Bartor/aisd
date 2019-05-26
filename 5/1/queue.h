@@ -25,4 +25,6 @@ int qFront(Queue* q);
 
 int qBack(Queue* q);
 
+void qDelete(Queue* q);
+
 #endif
