@@ -41,7 +41,6 @@ int bfs(int** graph, int size, int start, int end, int* parent) {
 
 	while (q.elements) {
 		int u = qPop(&q);
-		if (u == -1) continue;
 		for (int v = 0; v < size; v++) {
 			if (visited[u | (1 << v)] == 0 && graph[u][v] > 0) {
 				qPush(&q, u | (1 << v));
@@ -89,7 +88,7 @@ int fordFulkerson(int** graph, int size, int start, int end, int* paths) {
 
 int main(void) {
 	int SIZE = 16;
-	int REPS = 100;
+	int REPS = 1;
 	srand(time(NULL));
 	printf("i, flow, time, paths\n");
 	for (int i = 1; i <= SIZE; i++) {
