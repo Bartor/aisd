@@ -89,7 +89,7 @@ int fordFulkerson(int** graph, int size, int start, int end, int* paths) {
 
 int main(void) {
 	int SIZE = 16;
-	int REPS = 1;
+	int REPS = 100;
 	srand(time(NULL));
 	printf("i, flow, time, paths\n");
 	for (int i = 1; i <= SIZE; i++) {
