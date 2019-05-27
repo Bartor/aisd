@@ -6,6 +6,7 @@
 #include <limits.h>
 
 #include "queue.h"
+#include "pcg_basic.h"
 
 #define clz(x) __builtin_clz(x)
 
@@ -20,13 +21,15 @@ static inline int numberOfSetBits(int i) {
 }
 
 int** generate(int k) {
+	pcg32_random_t rng;
+	pcg32_srandom_r(&rng, time(NULL), 42u);
 	int** t = malloc((1<<k)*sizeof(int*));
 	for (int i = 0; i < (1<<k); i++) {
 		t[i] = malloc(k * sizeof(int));
 		int ones = numberOfSetBits(i);
 		int limit = (ones + 1 > k - ones ? 1 << (ones + 1) : 1 << (k - ones));
 		for (int j = 0; j < k; j++) {
-			t[i][j] = !((1<<j) & i) ? rand() % limit + 1 : 0;
+			t[i][j] = !((1<<j) & i) ? ((int) pcg32_random_r(&rng)) % limit + 1 : 0;
 		}
 	}
 	return t;
@@ -90,7 +93,6 @@ int fordFulkerson(int** graph, int size, int start, int end, int* paths) {
 int main(void) {
 	int SIZE = 16;
 	int REPS = 100;
-	srand(time(NULL));
 	printf("i, flow, time, paths\n");
 	for (int i = 1; i <= SIZE; i++) {
 		printf("%3d, ", i);
