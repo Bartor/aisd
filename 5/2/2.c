@@ -8,7 +8,7 @@
 #define START 3
 #define SIZE 10
 
-#define REPS 1
+#define REPS 100
 
 int** generate(int size, int neighbours) {
     pcg32_random_t rng;
@@ -58,8 +58,8 @@ int maxMatching(int** graph, int size, int neighbours) {
 }
 
 int main(void) {
-    printf("k\\/ i>,");
-    for (int i = 1; i <= SIZE; i++) printf("%d,%d, ", i, i);
+    printf(",");
+    for (int i = 1; i <= SIZE; i++) printf("%d,%d,", i, i);
     printf("\n");
     for (int i = START; i <= SIZE; i++) {
         printf("%d,", i);
@@ -75,7 +75,7 @@ int main(void) {
                 for (int f = 0; f < 1 << i; f++) free(g[f]);
                 free(g);
             }
-            printf("%20f, %20f,", matching, time);
+            printf("%f,%f,", matching, time);
         }
         printf("\n");
     }
