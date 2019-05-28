@@ -5,6 +5,11 @@
 
 #include "pcg_basic.h"
 
+#define START 3
+#define SIZE 10
+
+#define REPS 1
+
 int** generate(int size, int neighbours) {
     pcg32_random_t rng;
 	pcg32_srandom_r(&rng, time(NULL), 42u);
@@ -53,4 +58,25 @@ int maxMatching(int** graph, int size, int neighbours) {
 }
 
 int main(void) {
+    printf("k\\/ i>,");
+    for (int i = 1; i <= SIZE; i++) printf("%d,%d, ", i, i);
+    printf("\n");
+    for (int i = START; i <= SIZE; i++) {
+        printf("%d,", i);
+        for (int j = 1; j <= i; j++) {
+            float matching = 0, time = 0;
+            for (int r = 0; r < REPS; r++) {
+                int** g = generate(i, j);
+
+                clock_t t = clock();
+                matching += 1.0*maxMatching(g, 1 << i, j)/REPS;
+                time += 1.0*(clock() - t)/(CLOCKS_PER_SEC*REPS);
+
+                for (int f = 0; f < 1 << i; f++) free(g[f]);
+                free(g);
+            }
+            printf("%20f, %20f,", matching, time);
+        }
+        printf("\n");
+    }
 }
