@@ -13,6 +13,8 @@
 #define SIZE 16
 #define REPS 100
 
+pcg32_random_t rng;
+
 static inline int ilog2(int x) {
 	return sizeof(int) * CHAR_BIT - clz(x) - 1;
 }
@@ -24,8 +26,6 @@ static inline int numberOfSetBits(int i) {
 }
 
 int** generate(int k) {
-	pcg32_random_t rng;
-	pcg32_srandom_r(&rng, time(NULL), 42u);
 	int** t = malloc((1<<k)*sizeof(int*));
 	for (int i = 0; i < (1<<k); i++) {
 		t[i] = malloc(k * sizeof(int));
@@ -94,6 +94,7 @@ int fordFulkerson(int** graph, int size, int start, int end, int* paths) {
 } 
 
 int main(void) {
+	pcg32_srandom_r(&rng, time(NULL), 42u);
 	printf("i, flow, time, paths\n");
 	for (int i = 1; i <= SIZE; i++) {
 		printf("%3d, ", i);
