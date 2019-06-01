@@ -91,10 +91,28 @@ int fordFulkerson(int** graph, int size, int start, int end, int* paths) {
 	}
 
 	return maxFlow;
-} 
+}
 
-int main(void) {
+void glpkPrint(int** graph, int size) {
+	printf("param n := %d;\n\n", 1 << size);
+	printf("param : E : a :=\n");
+	for (int i = 0; i < 1 << size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (graph[i][j] > 0) printf("%d %d %d\n", i, i | (1 << j), graph[i][j]);
+		}
+	}
+	printf("end;\n");
+}
+
+int main(int argc, char** argv) {
 	pcg32_srandom_r(&rng, time(NULL), 42u);
+
+	if (argc > 1) {
+		int** graph = generate(atoi(argv[1]));
+		glpkPrint(graph, atoi(argv[1]));
+		return 0;
+	}
+
 	printf("i, flow, time, paths\n");
 	for (int i = 1; i <= SIZE; i++) {
 		printf("%3d, ", i);
