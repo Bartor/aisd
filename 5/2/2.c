@@ -10,24 +10,28 @@
 
 #define REPS 100
 
-int** generate(int size, int neighbours) {
-    pcg32_random_t rng;
-	pcg32_srandom_r(&rng, time(NULL), 42u);
-    int** g = malloc((1 << size) * sizeof(int*));
-    for (int i = 0; i < 1 << size; i++) {
-        g[i] = malloc(neighbours * sizeof(int));
-        for (int j = 0; j < neighbours; j++) {
-            g[i][j] = ((unsigned int) pcg32_random_r(&rng)) % (1 << size);
-        }
-    }
-    return g;
-}
+pcg32_random_t rng;
 
 int exists(int* hay, int needle, int size) {
     while (size-- > 0) {
         if (hay[size] == needle) return 1;
     }
     return 0;
+}
+
+int** generate(int size, int neighbours) {
+    int** g = malloc((1 << size) * sizeof(int*));
+    for (int i = 0; i < 1 << size; i++) {
+        g[i] = malloc(neighbours * sizeof(int));
+        for (int j = 0; j < neighbours; j++) {
+            int neighbour = ((unsigned int) pcg32_random_r(&rng)) % (1 << size);
+            while (exists(g[i], neighbour, j)) {
+                neighbour = ((unsigned int) pcg32_random_r(&rng)) % (1 << size);
+            }
+            g[i][j] = neighbour;
+        }
+    }
+    return g;
 }
 
 int bpm(int** graph, int size, int neighbours, int start, int* seen, int* match) {
@@ -58,6 +62,7 @@ int maxMatching(int** graph, int size, int neighbours) {
 }
 
 int main(void) {
+    pcg32_srandom_r(&rng, time(NULL), 42u);
     printf(",");
     for (int i = 1; i <= SIZE; i++) printf("%d,%d,", i, i);
     printf("\n");

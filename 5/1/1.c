@@ -105,7 +105,7 @@ int main(void) {
 			int paths = 0;
 			clock_t s = clock();
 			mFlow += 1.0*fordFulkerson(graph, i, 0, (1 << i) - 1, &paths)/REPS;
-			mTime += (1.0*(clock() - s)/CLOCKS_PER_SEC)/REPS;
+			mTime += 1.0*(clock() - s)/(CLOCKS_PER_SEC*REPS);
 			mPaths += 1.0*paths/REPS;
 
 			for (int k = 0; k < 1 << i; k++) free(graph[k]);
