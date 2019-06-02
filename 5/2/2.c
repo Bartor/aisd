@@ -24,9 +24,11 @@ int** generate(int size, int neighbours) {
     for (int i = 0; i < 1 << size; i++) {
         g[i] = malloc(neighbours * sizeof(int));
         for (int j = 0; j < neighbours; j++) {
-            int neighbour = ((unsigned int) pcg32_random_r(&rng)) % (1 << size);
+            int neighbour = ((int) pcg32_random_r(&rng)) % (1 << size);
+            if (neighbour < 0) neighbour = -neighbour;
             while (exists(g[i], neighbour, j)) {
-                neighbour = ((unsigned int) pcg32_random_r(&rng)) % (1 << size);
+                neighbour = ((int) pcg32_random_r(&rng)) % (1 << size);
+                if (neighbour < 0) neighbour = -neighbour;
             }
             g[i][j] = neighbour;
         }
