@@ -95,6 +95,8 @@ int fordFulkerson(int** graph, int size, int start, int end, int* paths) {
 }
 
 void glpkPrint(int** graph, int size) {
+	//this is retarded but i don't care at this point
+	printf("param n, integer, >= 2;\n\nset V, default {1..n};\n\nset E, within V cross V;\n\nparam a{(i,j) in E}, > 0;\n\nparam s, symbolic, in V, default 1;\n\nparam t, symbolic, in V, != s, default n;\n\nvar x{(i,j) in E}, >= 0, <= a[i,j];\n\nvar flow, >= 0;\n\ns.t. node{i in V}:\n\n   sum{(j,i) in E} x[j,i] + (if i = s then flow)\n\n   =\n\n   sum{(i,j) in E} x[i,j] + (if i = t then flow);\n\nmaximize obj: flow;\n\nsolve;\n\nprintf{1..56} \"=\"; printf \"\\n\";\nprintf \"Maximum flow from node %%s to node %%s is %%g\\n\\n\", s, t, flow;\n\ndata;\n");
 	printf("param n := %d;\n\n", 1 << size);
 	printf("param : E : a :=\n");
 	for (int i = 0; i < 1 << size; i++) {
