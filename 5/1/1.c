@@ -33,6 +33,7 @@ int** generate(int k) {
 		int limit = (ones + 1 > k - ones ? 1 << (ones + 1) : 1 << (k - ones));
 		for (int j = 0; j < k; j++) {
 			t[i][j] = !((1<<j) & i) ? ((int) pcg32_random_r(&rng)) % limit + 1 : 0;
+			if (t[i][j] < 0) t[i][j] = -t[i][j];
 		}
 	}
 	return t;
@@ -98,10 +99,11 @@ void glpkPrint(int** graph, int size) {
 	printf("param : E : a :=\n");
 	for (int i = 0; i < 1 << size; i++) {
 		for (int j = 0; j < size; j++) {
-			if (graph[i][j] > 0) printf("%d %d %d\n", i, i | (1 << j), graph[i][j]);
+			//glpk indexes from 1 for whatever reason
+			if (graph[i][j] > 0) printf("\t%d %d %d\n", 1 + i, 1 + (i | (1 << j)), graph[i][j]);
 		}
 	}
-	printf("end;\n");
+	printf(";\nend;\n");
 }
 
 int main(int argc, char** argv) {
