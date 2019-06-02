@@ -49,6 +49,24 @@ int bpm(int** graph, int size, int neighbours, int start, int* seen, int* match)
     return 0;
 }
 
+void glpkPrint(int** graph, int size, int neighbours) {
+	printf("param n := %d;\n\n", (1 << (size+1)) + 2);
+	printf("param : E : a :=\n");
+    for (int i = 0; i < 1 << size; i++) {
+        printf("\t1 %d 1\n", i+2);
+    }
+	for (int i = 0; i < 1 << size; i++) {
+		for (int j = 0; j < neighbours; j++) {
+			printf("\t%d %d 1\n", i+2, (1 << size) + graph[i][j] + 2);
+		}
+	}
+    for (int i = 0; i < 1 << size; i++) {
+        printf("\t%d %d 1\n", (1 << size) + i + 2, (1 << (size+1)) + 2);
+    }
+	printf(";\nend;\n");
+}
+
+
 int maxMatching(int** graph, int size, int neighbours) {
     int match[size];
     memset(match, -1, sizeof(match));
@@ -63,8 +81,15 @@ int maxMatching(int** graph, int size, int neighbours) {
     return res;
 }
 
-int main(void) {
+int main(int argc, char** argv) {
     pcg32_srandom_r(&rng, time(NULL), 42u);
+
+    if (argc > 2) {
+        int** graph = generate(atoi(argv[1]), atoi(argv[2]));
+        glpkPrint(graph, atoi(argv[1]), atoi(argv[2]));
+        return 0;
+    }
+    
     printf(",");
     for (int i = 1; i <= SIZE; i++) printf("%d,%d,", i, i);
     printf("\n");
