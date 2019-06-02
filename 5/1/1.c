@@ -32,8 +32,7 @@ int** generate(int k) {
 		int ones = numberOfSetBits(i);
 		int limit = (ones + 1 > k - ones ? 1 << (ones + 1) : 1 << (k - ones));
 		for (int j = 0; j < k; j++) {
-			t[i][j] = !((1<<j) & i) ? ((int) pcg32_random_r(&rng)) % limit + 1 : 0;
-			if (t[i][j] < 0) t[i][j] = -t[i][j];
+			t[i][j] = !((1<<j) & i) ? (0x7ffffff & ((int) pcg32_random_r(&rng))) % limit + 1 : 0;
 		}
 	}
 	return t;
